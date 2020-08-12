@@ -7,13 +7,11 @@ PYTHON_COMPAT=( python3_6 python3_7 )
 
 inherit distutils-r1
 
-DESCRIPTION="Open compressed files transparently"
+DESCRIPTION="Observable typed attributes for Python classes"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
-HOMEPAGE="https://github.com/marcelm/xopen/"
+HOMEPAGE="http://docs.enthought.com/traits"
 
-LICENSE="MIT"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="amd64"
 
-IUSE="dev"
-RDEPEND="dev? ( dev-python/pytest )"
