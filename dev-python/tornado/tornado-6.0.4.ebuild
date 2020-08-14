@@ -7,14 +7,11 @@ PYTHON_COMPAT=( python3_6 python3_7 )
 
 inherit distutils-r1
 
-DESCRIPTION="Jupyter core package. A base package on which Jupyter projects rely."
+DESCRIPTION="Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed."
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
-HOMEPAGE="https://jupyter.org"
+HOMEPAGE="http://www.tornadoweb.org/"
 
-LICENSE="BSD"
+LICENSE="http://www.apache.org/licenses/LICENSE-2.0"
 SLOT="0"
 KEYWORDS="amd64"
 
-IUSE=""
-RDEPEND="dev-python/traitlets
-	>=dev-python/pywin32-1.0"
