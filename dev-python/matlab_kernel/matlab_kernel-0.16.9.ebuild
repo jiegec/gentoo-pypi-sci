@@ -13,7 +13,7 @@ HOMEPAGE="https://github.com/Calysto/matlab_kernel"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 
 IUSE=""
 RDEPEND=">=dev-python/metakernel-0.23.0

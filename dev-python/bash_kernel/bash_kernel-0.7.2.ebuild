@@ -13,7 +13,7 @@ HOMEPAGE="https://github.com/takluyver/bash_kernel"
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 
 IUSE=""
 RDEPEND=">=dev-python/pexpect-4.0"

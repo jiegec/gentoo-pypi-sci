@@ -13,7 +13,7 @@ HOMEPAGE="https://github.com/dmlc/xgboost"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 
 IUSE="dask datatable pandas plotting scikit-learn"
 RDEPEND="dev-python/numpy

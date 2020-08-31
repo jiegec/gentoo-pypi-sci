@@ -13,7 +13,7 @@ HOMEPAGE="http://scikit-learn.org"
 
 LICENSE="new BSD"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 
 IUSE="alldeps"
 RDEPEND=">=dev-python/numpy-1.13.3

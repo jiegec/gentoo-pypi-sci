@@ -13,7 +13,7 @@ HOMEPAGE="https://github.com/marcelm/xopen/"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 
 IUSE="dev"
 RDEPEND="dev? ( dev-python/pytest )"
