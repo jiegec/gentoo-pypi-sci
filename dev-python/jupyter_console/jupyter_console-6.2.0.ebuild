@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 IUSE=""
-RDEPEND="dev-python/jupyter-client
+RDEPEND="dev-python/jupyter_client
 	dev-python/ipython
 	dev-python/ipykernel
 	dev-python/prompt-toolkit (!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0)
