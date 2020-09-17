@@ -1,0 +1,25 @@
+# Copyright 1999-2020 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+PYTHON_COMPAT=( python3_6 python3_7 )
+
+inherit distutils-r1
+
+DESCRIPTION="Metakernel for Jupyter"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+HOMEPAGE="https://github.com/Calysto/metakernel"
+
+LICENSE=""
+SLOT="0"
+KEYWORDS="~amd64"
+
+IUSE="activity parallel test"
+RDEPEND="dev-python/ipykernel
+	>=dev-python/pexpect-4.2
+	activity? ( dev-python/portalocker )
+	parallel? ( dev-python/ipyparallel )
+	test? ( dev-python/pytest
+		dev-python/pytest-cov
+		dev-python/requests )"
