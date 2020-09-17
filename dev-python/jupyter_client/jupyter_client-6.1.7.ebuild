@@ -17,10 +17,10 @@ KEYWORDS="~amd64"
 
 IUSE="test"
 RDEPEND="dev-python/traitlets
-	>=dev-python/jupyter-core-4.6.0
+	>=dev-python/jupyter_core-4.6.0
 	>=dev-python/pyzmq-13
 	>=dev-python/python-dateutil-2.1
-	>=dev-python/tornado-4.1
+	>=www-servers/tornado-4.1
 	test? ( dev-python/ipykernel
 		dev-python/ipython
 		dev-python/mock
