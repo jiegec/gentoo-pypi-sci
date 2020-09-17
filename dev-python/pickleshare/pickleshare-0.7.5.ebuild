@@ -16,4 +16,4 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 IUSE=""
-RDEPEND="dev-python/pathlib2; python_version in "2.6 2.7 3.2 3.3""
+RDEPEND="dev-python/pathlib2"
