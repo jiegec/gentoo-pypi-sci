@@ -17,6 +17,6 @@ KEYWORDS="~amd64"
 
 IUSE=""
 RDEPEND=">=dev-python/metakernel-0.23.0
-	>=dev-python/jupyter-client-4.4.0
+	>=dev-python/jupyter_client-4.4.0
 	>=dev-python/ipython-4.0.0
 	>=dev-python/wurlitzer-1.0.2"
