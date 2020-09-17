@@ -13,7 +13,7 @@ HOMEPAGE="https://github.com/h2oai/datatable"
 
 LICENSE="Mozilla Public License v2.0"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 
 IUSE="testing"
 RDEPEND="dev-python/blessed
