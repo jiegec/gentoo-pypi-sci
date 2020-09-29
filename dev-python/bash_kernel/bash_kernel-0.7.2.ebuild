@@ -17,3 +17,4 @@ KEYWORDS="~amd64"
 
 IUSE=""
 RDEPEND=">=dev-python/pexpect-4.0"
+distutils_enable_tests pytest

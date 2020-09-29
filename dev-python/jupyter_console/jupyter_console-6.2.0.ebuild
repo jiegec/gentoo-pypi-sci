@@ -22,3 +22,4 @@ RDEPEND="dev-python/jupyter_client
 	dev-python/prompt-toolkit (!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0)
 	dev-python/pygments
 	dev-python/pexpect ; (sys_platform != "win32") and extra == 'test'"
+distutils_enable_tests pytest

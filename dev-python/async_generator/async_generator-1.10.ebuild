@@ -13,5 +13,7 @@ HOMEPAGE="https://github.com/python-trio/async_generator"
 
 LICENSE="MIT -or- Apache License 2.0"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 
+
+distutils_enable_tests pytest

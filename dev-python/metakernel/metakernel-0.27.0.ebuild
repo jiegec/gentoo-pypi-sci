@@ -23,3 +23,4 @@ RDEPEND="dev-python/ipykernel
 	test? ( dev-python/pytest
 		dev-python/pytest-cov
 		dev-python/requests )"
+distutils_enable_tests pytest

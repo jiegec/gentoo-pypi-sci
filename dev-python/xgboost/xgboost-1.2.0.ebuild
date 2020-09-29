@@ -26,3 +26,4 @@ RDEPEND="dev-python/numpy
 	plotting? ( dev-python/graphviz
 		dev-python/matplotlib )
 	scikit-learn? ( dev-python/scikit-learn )"
+distutils_enable_tests pytest

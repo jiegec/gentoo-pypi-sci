@@ -18,3 +18,4 @@ KEYWORDS="~amd64"
 IUSE=""
 RDEPEND="dev-python/traitlets
 	>=dev-python/pywin32-1.0"
+distutils_enable_tests pytest

@@ -22,3 +22,4 @@ RDEPEND=">=dev-python/numpy-1.13.3
 	>=dev-python/threadpoolctl-2.0.0
 	alldeps? ( >=dev-python/numpy-1.13.3
 		>=sci-libs/scipy-0.19.1 )"
+distutils_enable_tests pytest

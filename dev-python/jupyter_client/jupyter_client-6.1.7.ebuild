@@ -28,3 +28,4 @@ RDEPEND="dev-python/traitlets
 		dev-python/pytest-asyncio
 		dev-python/async-generator
 		dev-python/pytest-timeout )"
+distutils_enable_tests pytest

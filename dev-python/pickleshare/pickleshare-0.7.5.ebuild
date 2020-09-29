@@ -17,3 +17,4 @@ KEYWORDS="~amd64"
 
 IUSE=""
 RDEPEND="dev-python/pathlib2"
+distutils_enable_tests pytest
