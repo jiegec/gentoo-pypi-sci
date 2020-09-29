@@ -7,14 +7,13 @@ PYTHON_COMPAT=( python3_6 python3_7 )
 
 inherit distutils-r1
 
-DESCRIPTION="Open compressed files transparently"
+DESCRIPTION="Automated Classification of Periodic Variable Stars Using Machine Learning"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
-HOMEPAGE="https://github.com/marcelm/xopen/"
+HOMEPAGE="https://github.com/dwkim78/upsilon"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE="dev"
-RDEPEND="dev? ( dev-python/pytest )"
+
 distutils_enable_tests pytest
