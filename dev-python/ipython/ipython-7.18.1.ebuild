@@ -55,3 +55,4 @@ RDEPEND=">=dev-python/setuptools-18.5
 		dev-python/nbformat
 		dev-python/ipykernel
 		>=dev-python/numpy-1.14 )"
+distutils_enable_tests pytest
