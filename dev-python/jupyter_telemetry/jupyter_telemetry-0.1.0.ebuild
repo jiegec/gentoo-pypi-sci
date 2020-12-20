@@ -16,8 +16,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 IUSE=""
-RDEPEND="dev-python/jsonschema
-	dev-python/python-json-logger
-	dev-python/traitlets
-	dev-python/ruamel-yaml"
+RDEPEND="dev-python/jsonschema[${PYTHON_USEDEP}]
+	dev-python/python-json-logger[${PYTHON_USEDEP}]
+	dev-python/traitlets[${PYTHON_USEDEP}]
+	dev-python/ruamel-yaml[${PYTHON_USEDEP}]"
 distutils_enable_tests pytest

@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 IUSE="dev test"
-RDEPEND="dev-python/pyopenssl
-	dev? ( dev-python/pytest )
-	test? ( dev-python/pytest )"
+RDEPEND="dev-python/pyopenssl[${PYTHON_USEDEP}]
+	dev? ( dev-python/pytest[${PYTHON_USEDEP}] )
+	test? ( dev-python/pytest[${PYTHON_USEDEP}] )"
 distutils_enable_tests pytest
