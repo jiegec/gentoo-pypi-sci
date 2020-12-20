@@ -1,0 +1,15 @@
+#!/sbin/openrc-run
+# Copyright 2020 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name="jupyterhub daemon"
+description="Multi-user server for Jupyter notebooks"
+command=/usr/bin/jupyterhub
+command_args="--config /etc/jupyterhub/config.py"
+supervisor=supervise-daemon
+supervise_daemon_args="--pidfile /run/${RC_SVCNAME}.pid"
+
+start_pre() {
+        checkpath -f --owner root:root --mode 0600 \
+                /etc/jupyterhub/config.py
+}

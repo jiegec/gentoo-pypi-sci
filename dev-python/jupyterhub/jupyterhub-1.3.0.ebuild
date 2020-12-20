@@ -32,3 +32,22 @@ RDEPEND="dev-python/alembic[${PYTHON_USEDEP}]
 	dev-python/pamela[${PYTHON_USEDEP}]
 	>=dev-python/psutil-5.6.5[${PYTHON_USEDEP}]"
 distutils_enable_tests pytest
+
+src_install() {
+	distutils-r1_src_install
+
+	diropts -m0700
+	insinto /etc/jupyterhub
+
+	dodir /etc/jupyterhub
+	keepdir /var/lib/jupyterhub
+
+	newins ${FILESDIR}/pseudo.py config.py
+	newins ${FILESDIR}/pseudo_singleuser.py singleuser.py
+	newinitd ${FILESDIR}/${PN}.initd ${PN}
+}
+
+pkg_postinst() {
+	elog "Jupyterhub also depends on Node.js package 'configurable-http-proxy'"
+	elog "Please execute 'npm install -g configurable-http-proxy' to install it yourself."
+}
