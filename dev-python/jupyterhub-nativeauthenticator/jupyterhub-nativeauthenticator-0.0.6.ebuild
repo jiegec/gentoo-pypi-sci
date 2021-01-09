@@ -19,4 +19,7 @@ IUSE=""
 RDEPEND=">=dev-python/jupyterhub-0.8[${PYTHON_USEDEP}]
 	dev-python/bcrypt[${PYTHON_USEDEP}]
 	dev-python/onetimepass[${PYTHON_USEDEP}]"
+
+PATCHES=( "${FILESDIR}"/${PN}-0.0.6_await.patch )
+
 distutils_enable_tests pytest
