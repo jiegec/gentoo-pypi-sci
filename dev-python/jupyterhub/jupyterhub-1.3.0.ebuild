@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_6 python3_7 python3_8 )
 
-inherit distutils-r1
+inherit distutils-r1 prefix
 
 DESCRIPTION="JupyterHub: A multi-user server for Jupyter notebooks"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
@@ -42,9 +42,9 @@ src_install() {
 	dodir /etc/jupyterhub
 	keepdir /var/lib/jupyterhub
 
-	newins ${FILESDIR}/pseudo.py config.py
-	newins ${FILESDIR}/pseudo_singleuser.py singleuser.py
-	newinitd ${FILESDIR}/${PN}.initd ${PN}
+	newins "$(prefixify_ro "${FILESDIR}"/pseudo.py)" config.py
+	newins "$(prefixify_ro "${FILESDIR}"/pseudo_singleuser.py)" singleuser.py
+	newinitd "$(prefixify_ro "${FILESDIR}"/${PN}.initd)" ${PN}
 }
 
 pkg_postinst() {
