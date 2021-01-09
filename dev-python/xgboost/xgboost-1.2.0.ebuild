@@ -17,7 +17,7 @@ KEYWORDS="~amd64"
 
 IUSE="dask datatable pandas plotting scikit-learn"
 RDEPEND="dev-python/numpy
-	sci-libs/scipy
+	dev-python/scipy
 	dask? ( dev-python/dask
 		dev-python/pandas
 		dev-python/distributed )
