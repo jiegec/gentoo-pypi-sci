@@ -6,6 +6,6 @@ c.ConfigurableHTTPProxy.pid_file = '/run/jupyterhub_proxy.pid'
 c.JupyterHub.data_files_path = '/usr/share/jupyterhub'
 
 c.Spawner.notebook_dir = '~/'
-c.Spawner.args = ['--config=' + '/etc/jupyterhub/singleuser.py'), ]
+c.Spawner.args = ['--config=' + '/etc/jupyterhub/singleuser.py']
 
 c.JupyterHub.port = int(8000)
