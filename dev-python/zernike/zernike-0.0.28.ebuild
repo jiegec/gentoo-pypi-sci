@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_6 python3_7 python3_8 )
 inherit distutils-r1
 
 DESCRIPTION="Python code for Zernike polynomials"
-SRC_URI="mirror://pypi/fd/a6/0cf0d11c004363c057c974c2bf0e686eb2436d5e6b0f74549693f35adc58/zernike-0.0.28.tar.gz"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 HOMEPAGE="https://github.com/jacopoantonello/zernike"
 
 LICENSE="GPL-3+"
