@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_6 python3_7 python3_8 )
+PYTHON_COMPAT=( python3_8 python3_9 )
 
 inherit distutils-r1
 
@@ -21,12 +21,10 @@ RDEPEND=">=dev-python/setuptools-18.5
 	dev-python/decorator
 	dev-python/pickleshare
 	>=dev-python/traitlets-4.2
-	dev-python/prompt-toolkit (!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0)
+	dev-python/prompt-toolkit
 	dev-python/pygments
 	dev-python/backcall
-	dev-python/pexpect (>4.3); sys_platform != "win32"
-	dev-python/appnope; sys_platform == "darwin"
-	dev-python/colorama; sys_platform == "win32"
+	dev-python/pexpect
 	all? ( >=dev-python/Sphinx-1.3
 		dev-python/ipykernel
 		dev-python/ipyparallel

@@ -3,13 +3,13 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_8 python3_9 )
+PYTHON_COMPAT=( python3_{8,9} )
 
 inherit distutils-r1
 
-DESCRIPTION="Python port of the UniDip clustering algorithm"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
-HOMEPAGE="https://github.com/BenjaminDoran/unidip"
+DESCRIPTION="Embedded Cone Solver."
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P/_p/.post}.tar.gz"
+HOMEPAGE="https://github.com/embotech/ecos"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -17,5 +17,5 @@ KEYWORDS="~amd64"
 
 IUSE=""
 RDEPEND="dev-python/numpy[${PYTHON_USEDEP}]
-	dev-python/matplotlib[${PYTHON_USEDEP}]"
+	sci-libs/scipy[${PYTHON_USEDEP}]"
 distutils_enable_tests pytest

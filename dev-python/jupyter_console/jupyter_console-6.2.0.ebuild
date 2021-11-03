@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_6 python3_7 python3_8 )
+PYTHON_COMPAT=( python3_8 python3_9 )
 
 inherit distutils-r1
 
@@ -19,7 +19,7 @@ IUSE=""
 RDEPEND="dev-python/jupyter_client
 	dev-python/ipython
 	dev-python/ipykernel
-	dev-python/prompt-toolkit (!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0)
+	dev-python/prompt-toolkit
 	dev-python/pygments
-	dev-python/pexpect ; (sys_platform != "win32") and extra == 'test'"
+	dev-python/pexpect"
 distutils_enable_tests pytest
