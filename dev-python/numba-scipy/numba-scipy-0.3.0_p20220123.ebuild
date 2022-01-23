@@ -21,3 +21,5 @@ IUSE=""
 RDEPEND="dev-python/scipy[${PYTHON_USEDEP}]
 	>=dev-python/numba-0.45[${PYTHON_USEDEP}]"
 distutils_enable_tests pytest
+
+PATCHES=( ${FILESDIR}/numba-scipy-0.3.0-version.patch )

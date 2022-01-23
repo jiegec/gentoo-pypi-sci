@@ -1,0 +1,13 @@
+Index: numba-scipy-23dc6ef6b3c6b12415bffcb09ffffdcf6148ab6f/setup.py
+===================================================================
+--- numba-scipy-23dc6ef6b3c6b12415bffcb09ffffdcf6148ab6f.orig/setup.py
++++ numba-scipy-23dc6ef6b3c6b12415bffcb09ffffdcf6148ab6f/setup.py
+@@ -2,7 +2,7 @@ from setuptools import setup, find_packa
+ import versioneer
+ 
+ 
+-_install_requires = ['scipy>=0.16,<=1.7.1', 'numba>=0.45']
++_install_requires = ['scipy>=0.16', 'numba>=0.45']
+ 
+ 
+ metadata = dict(
