@@ -1,0 +1,12 @@
+diff --color -upr cupy-10.0.0/cupy/cuda/compiler.py orig/cupy/cuda/compiler.py
+--- cupy-10.0.0/cupy/cuda/compiler.py	2022-01-20 21:20:11.023501914 +0800
++++ orig/cupy/cuda/compiler.py	2022-01-20 21:14:35.411499688 +0800
+@@ -829,7 +829,7 @@ def _compile_with_cache_hip(source, opti
+     rocm_build_version = driver.get_build_version()
+     if rocm_build_version >= 40300000 and rocm_build_version < 40500000:
+         options += (
+-            '-I' + get_rocm_path() + '/llvm/lib/clang/13.0.0/include/',)
++            '-I' + '@GENTOO_PORTAGE_EPREFIX@/usr/lib/llvm/roc/lib/clang/13.0.0/include/',)
+ 
+     if cache_dir is None:
+         cache_dir = get_cache_dir()
