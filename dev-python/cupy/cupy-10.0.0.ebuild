@@ -5,18 +5,19 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_{8..10} )
 
-IUSE="rocm"
-
 inherit distutils-r1 prefix
 
 DESCRIPTION="CuPy: A NumPy-compatible array library accelerated by CUDA"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 HOMEPAGE="https://cupy.dev/"
 
+IUSE="rocm +cuda"
+REQUIRED_USE="^^ ( cuda rocm )"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-DEPEND="rocm? ( sci-libs/hipBLAS )"
+DEPEND="rocm? ( sci-libs/hipBLAS )
+	cuda? ( dev-util/nvidia-cuda-toolkit )"
 RDEPEND=">=dev-python/fastrlock-0.5"
 
 distutils_enable_tests pytest
