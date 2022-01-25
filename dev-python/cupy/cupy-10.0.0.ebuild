@@ -16,6 +16,7 @@ HOMEPAGE="https://cupy.dev/"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+DEPEND="rocm? ( sci-libs/hipBLAS )"
 RDEPEND=">=dev-python/fastrlock-0.5"
 
 distutils_enable_tests pytest
@@ -32,9 +33,11 @@ src_prepare ()
 
 src_compile() {
 	if use rocm; then
+		addwrite /dev/kfd
+		addwrite /dev/dri/
 		export CUPY_INSTALL_USE_HIP=1
 		export ROCM_HOME="${EPREFIX}/usr"
-		# export HCC_AMDGPU_TARGET="${AMDGPU_TARGETS}"
+		export HCC_AMDGPU_TARGET="${AMDGPU_TARGETS}"
 		export HIPCC="${EPREFIX}/usr/lib/hip/bin/hipcc"
 	fi
 	distutils-r1_src_compile
