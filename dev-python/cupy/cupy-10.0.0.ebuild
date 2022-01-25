@@ -40,6 +40,12 @@ src_compile() {
 		export ROCM_HOME="${EPREFIX}/usr"
 		export HCC_AMDGPU_TARGET="${AMDGPU_TARGETS}"
 		export HIPCC="${EPREFIX}/usr/lib/hip/bin/hipcc"
+	elif use cuda; then
+		local target
+		for target in ${NVPTX_TARGETS}; do
+			CUPY_NVCC_GENERATE_CODE+="arch=${target/sm/compute},code=${target};"
+		done
+		export CUPY_NVCC_GENERATE_CODE
 	fi
 	distutils-r1_src_compile
 }
