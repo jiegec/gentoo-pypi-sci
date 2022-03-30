@@ -29,7 +29,8 @@ RDEPEND=">=dev-python/fastrlock-0.5[${PYTHON_USEDEP}]"
 distutils_enable_tests pytest
 
 PATCHES=( "${FILESDIR}/add_dir.patch"
-	"${FILESDIR}/includedir.patch" )
+	"${FILESDIR}/includedir.patch"
+	"${FILESDIR}/cupy-10.0-keep-temp.patch" )
 
 src_prepare ()
 {
