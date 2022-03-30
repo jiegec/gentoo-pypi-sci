@@ -11,9 +11,8 @@ DESCRIPTION="Fast, re-entrant optimistic lock implemented in Cython"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${PN/-/_}-${PV}.tar.gz"
 HOMEPAGE="https://github.com/scoder/fastrlock"
 
-LICENSE="MIT style"
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-
 
 distutils_enable_tests pytest
