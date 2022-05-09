@@ -25,7 +25,9 @@ DEPEND="
 	cudnn? ( dev-libs/cudnn )
 	rocm? ( sci-libs/hipBLAS
 		  sci-libs/hipCUB
+		  sci-libs/hipFFT
 		  sci-libs/rocRAND
+		  sci-libs/rocThrust
 		  dev-util/roctracer
 		  sci-libs/hipSPARSE )"
 RDEPEND=">=dev-python/fastrlock-0.5[${PYTHON_USEDEP}]"
