@@ -23,13 +23,20 @@ DEPEND="
 	>=dev-python/numpy-1.18.0[${PYTHON_USEDEP}]
 	cuda? ( dev-util/nvidia-cuda-toolkit[profiler] )
 	cudnn? ( dev-libs/cudnn )
-	rocm? ( sci-libs/hipBLAS )"
+	rocm? ( sci-libs/hipBLAS
+		  sci-libs/hipCUB
+		  sci-libs/hipFFT
+		  sci-libs/rocRAND
+		  sci-libs/rocThrust
+		  dev-util/roctracer
+		  sci-libs/hipSPARSE )"
 RDEPEND=">=dev-python/fastrlock-0.5[${PYTHON_USEDEP}]"
 
 distutils_enable_tests pytest
 
 PATCHES=( "${FILESDIR}/add_dir.patch"
-	"${FILESDIR}/includedir.patch" )
+	"${FILESDIR}/includedir.patch"
+	"${FILESDIR}/cupy-10.0-keep-temp.patch" )
 
 src_prepare ()
 {
@@ -43,8 +50,7 @@ src_compile() {
 		addwrite /dev/dri/
 		export CUPY_INSTALL_USE_HIP=1
 		export ROCM_HOME="${EPREFIX}/usr"
-		export HCC_AMDGPU_TARGET="${AMDGPU_TARGETS}"
-		export HIPCC="${EPREFIX}/usr/lib/hip/bin/hipcc"
+		export HCC_AMDGPU_TARGET="${AMDGPU_TARGETS//;/,}"
 	elif use cuda; then
 		# specify instructions to emit
 		local target
