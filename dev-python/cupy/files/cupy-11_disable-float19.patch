@@ -1,0 +1,14 @@
+Index: cupy-11.0.0/cupy/_core/_routines_linalg.pyx
+===================================================================
+--- cupy-11.0.0.orig/cupy/_core/_routines_linalg.pyx
++++ cupy-11.0.0/cupy/_core/_routines_linalg.pyx
+@@ -729,9 +729,6 @@ cpdef _ndarray_base tensordot_core_v11(
+         raise ValueError('Invalid dtype: {}'.format(c.dtype))
+ 
+     cdef int algo = cublas.CUBLAS_GEMM_DEFAULT
+-    if ((compute_capability >= 80) or
+-            (compute_capability >= 70 and c.dtype == 'e')):
+-        algo = cublas.CUBLAS_GEMM_DEFAULT_TENSOR_OP
+ 
+     if cublas_compute_type in (cublas.CUBLAS_COMPUTE_32F,
+                                cublas.CUBLAS_COMPUTE_32F_PEDANTIC,
