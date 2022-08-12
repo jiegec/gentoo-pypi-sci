@@ -43,7 +43,7 @@ PATCHES=( "${FILESDIR}"/cupy-10.6-add_dir.patch
 src_prepare ()
 {
 	default
-	use float19 || eapply "${FILESDIR}"/${PN}-11_disable-float19.patch
+	use float19 || eapply "${FILESDIR}"/${PN}-11_disable-gemmEx.patch
 	eprefixify cupy/cuda/compiler.py
 }
 
