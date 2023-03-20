@@ -1,0 +1,67 @@
+From 324c40b5177b8e6165f62719c7a68119f0bb50b8 Mon Sep 17 00:00:00 2001
+From: YiyangWu <xgreenlandforwyy@gmail.com>
+Date: Mon, 8 Aug 2022 20:30:58 +0800
+Subject: [PATCH] Revert "remove the need to set HCC_AMDGPU_TARGET at runtime"
+
+This partially reverts commit f5936ee11c86423ce9aab08b1a24160b8bb3894c.
+During installtion of cupy, GPU architecture should be specified. At
+runtime, it can be judged automatically.
+
+Signed-off-by: YiyangWu <xgreenlandforwyy@gmail.com>
+---
+ cupy/cuda/compiler.py | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
+
+diff --git a/cupy/cuda/compiler.py b/cupy/cuda/compiler.py
+index 79b0a572c..709fe030f 100644
+--- a/cupy/cuda/compiler.py
++++ b/cupy/cuda/compiler.py
+@@ -284,6 +284,14 @@ _hash_length = len(_hash_hexdigest(b''))  # 40 for SHA1
+ def compile_using_nvrtc(source, options=(), arch=None, filename='kern.cu',
+                         name_expressions=None, log_stream=None,
+                         cache_in_memory=False, jitify=False):
++    if not arch:
++        arch = _get_arch()
++
++    if not runtime.is_hip:
++        options += ('-arch=compute_{}'.format(arch),)
++    else:
++        options += ('-arch={}'.format(arch),)
++
+     def _compile(
+             source, options, cu_path, name_expressions, log_stream, jitify):
+ 
+@@ -711,10 +719,12 @@ def is_valid_kernel_name(name):
+ 
+ 
+ def compile_using_hipcc(source, options, arch, log_stream=None):
+-    # As of ROCm 3.5.0 hiprtc/hipcc can automatically pick up the
+-    # right arch without setting HCC_AMDGPU_TARGET, so we don't need
+-    # to set arch here
+-    cmd = ['hipcc', '--genco'] + list(options)
++    # TODO(leofang): it seems as of ROCm 3.5.0 hiprtc/hipcc can automatically
++    # pick up the right arch without needing HCC_AMDGPU_TARGET. Perhaps we just
++    # don't bother passing arch to hiprtc/hipcc?
++    assert len(arch) > 0
++    # pass HCC_AMDGPU_TARGET same as arch
++    cmd = ['hipcc', '--genco', '-arch='+arch] + list(options)
+ 
+     with tempfile.TemporaryDirectory() as root_dir:
+         path = os.path.join(root_dir, 'kern')
+@@ -853,10 +863,9 @@ def _compile_with_cache_hip(source, options, arch, cache_dir, extra_source,
+ 
+     if cache_dir is None:
+         cache_dir = get_cache_dir()
+-    # As of ROCm 3.5.0 hiprtc/hipcc can automatically pick up the
+-    # right arch without setting HCC_AMDGPU_TARGET, so we don't need
+-    # to tell the compiler which arch we are targeting. But, we still
+-    # need to know arch as part of the cache key:
++    # TODO(leofang): it seems as of ROCm 3.5.0 hiprtc/hipcc can automatically
++    # pick up the right arch without needing HCC_AMDGPU_TARGET. Perhaps we just
++    # don't bother passing arch to hiprtc/hipcc?
+     if arch is None:
+         # On HIP, gcnArch is computed from "compute capability":
+         # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-4.0.0/rocclr/hip_device.cpp#L202
+-- 
+2.34.1
+
