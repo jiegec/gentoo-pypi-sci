@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM 'http://www.gentoo.org/dtd/metadata.dtd'>
 <pkgmetadata>
+  <remote-id type="pypi">cupy</remote-id>
   <maintainer type="person">
     <email>xgreenlandforwuyy@gmail.com</email>
   </maintainer>
