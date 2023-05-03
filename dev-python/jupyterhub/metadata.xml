@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE pkgmetadata SYSTEM 'http://www.gentoo.org/dtd/metadata.dtd'>
-<pkgmetadata>
-	<maintainer type="person">
-		<email>heroxbd@gentoo.org</email>
-	</maintainer>
-</pkgmetadata>
+    <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+    <pkgmetadata>
+      <maintainer type="person">
+        <email>zongyu@novazy.net</email>
+        <name>Pypi ebuilder</name>
+      </maintainer>
+      <longdescription lang="en">
+      there will be description later.
+    </longdescription>
+      <upstream>
+        <remote-id type="pypi">jupyterhub</remote-id>
+      </upstream>
+    </pkgmetadata>
+    
