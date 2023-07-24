@@ -6,10 +6,10 @@ EAPI=8
 DISTUTILS_SINGLE_IMPL=1
 PYTHON_COMPAT=( python3_{9..11} )
 
-inherit distutils-r1
+inherit distutils-r1 pypi
 
 DESCRIPTION="A Python library for probabilistic modeling and inference"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="http://pyro.ai"
 
 LICENSE="Apache-2.0"

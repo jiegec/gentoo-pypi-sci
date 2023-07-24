@@ -5,10 +5,10 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{9..11} )
 
-inherit distutils-r1
+inherit distutils-r1 pypi
 
 DESCRIPTION="Manipulate JSON-like data with NumPy-like idioms."
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="https://github.com/scikit-hep/awkward-1.0"
 
 LICENSE="BSD"
