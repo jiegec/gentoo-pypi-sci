@@ -5,10 +5,10 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_9 python3_1{0,1} )
 DISTUTILS_USE_PEP517=setuptools
-inherit distutils-r1
+inherit distutils-r1 pypi
 
 DESCRIPTION="DuckDB embedded database"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="https://www.duckdb.org"
 
 LICENSE="MIT"

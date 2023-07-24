@@ -5,7 +5,7 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{9..11} )
 
-inherit distutils-r1
+inherit distutils-r1 pypi
 
 DESCRIPTION="numba-scipy extends Numba to make it aware of SciPy"
 SRC_URI="https://github.com/numba/numba-scipy/archive/23dc6ef6b3c6.tar.gz -> ${P}.tar.gz"
