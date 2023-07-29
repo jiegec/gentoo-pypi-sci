@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{9..11} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Python port of the UniDip clustering algorithm"
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
+SRC_URI="$(pypi_sdist_url --no-normalize "${PN}" "${PV}")"
 HOMEPAGE="https://github.com/BenjaminDoran/unidip"
 
 LICENSE="GPL-3"

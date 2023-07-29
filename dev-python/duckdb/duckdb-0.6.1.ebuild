@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 inherit distutils-r1 pypi
 
 DESCRIPTION="DuckDB embedded database"
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
+SRC_URI="$(pypi_sdist_url --no-normalize "${PN}" "${PV}")"
 HOMEPAGE="https://www.duckdb.org"
 
 LICENSE="MIT"

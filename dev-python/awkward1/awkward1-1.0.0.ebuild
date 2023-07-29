@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{9..11} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Manipulate JSON-like data with NumPy-like idioms."
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
+SRC_URI="$(pypi_sdist_url --no-normalize "${PN}" "${PV}")"
 HOMEPAGE="https://github.com/scikit-hep/awkward-1.0"
 
 LICENSE="BSD"

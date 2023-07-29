@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{9..11} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="A backport of the dataclasses module for Python 3.6"
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
+SRC_URI="$(pypi_sdist_url --no-normalize "${PN}" "${PV}")"
 HOMEPAGE="https://github.com/ericvsmith/dataclasses"
 
 LICENSE="Apache"

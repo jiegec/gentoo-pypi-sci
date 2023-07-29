@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{9..11} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="XGBoost Python Package"
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
+SRC_URI="$(pypi_sdist_url --no-normalize "${PN}" "${PV}")"
 HOMEPAGE="https://github.com/dmlc/xgboost"
 
 LICENSE="Apache-2.0"
