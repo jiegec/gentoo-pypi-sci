@@ -41,7 +41,7 @@ RDEPEND=">=dev-python/fastrlock-0.8.1
 
 distutils_enable_tests pytest
 
-PATCHES=( "${FILESDIR}"/cupy-11.6-add_dir.patch
+PATCHES=( "${FILESDIR}"/${PN}-11.6-add_dir.patch
 	"${FILESDIR}"/${PN}-12.1.0-reenable-HCC_AMDGPU_TARGET.patch )
 
 src_prepare ()
