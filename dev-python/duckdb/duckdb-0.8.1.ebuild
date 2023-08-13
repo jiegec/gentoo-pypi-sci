@@ -17,5 +17,13 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 IUSE=""
-RDEPEND="dev-python/numpy[${PYTHON_USEDEP}]"
+RDEPEND="dev-python/numpy[${PYTHON_USEDEP}]
+	dev-python/pybind11[${PYTHON_USEDEP}]
+	dev-python/pandas[${PYTHON_USEDEP}]
+	dev-python/pyarrow[${PYTHON_USEDEP}]
+"
+DEPEND="${RDEPEND}"
+
+PATCHES=( "${FILESDIR}"/${PN}-0.8.1-drop-py36.patch )
+
 distutils_enable_tests pytest
