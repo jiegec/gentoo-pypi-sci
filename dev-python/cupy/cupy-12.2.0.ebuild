@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_{10..11} )
 ROCM_VERSION=5.1.3
 DISTUTILS_USE_PEP517=setuptools
 
-inherit distutils-r1 prefix pypi rocm
+inherit distutils-r1 prefix pypi rocm cuda
 
 DESCRIPTION="CuPy: A NumPy-compatible array library accelerated by CUDA"
 SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
@@ -49,6 +49,7 @@ src_prepare ()
 	default
 	use float19 || eapply "${FILESDIR}"/${PN}-11_disable-gemmEx.patch
 	eprefixify cupy/cuda/compiler.py
+	use cuda && cuda_src_prepare
 }
 
 src_compile() {
@@ -66,6 +67,7 @@ src_compile() {
 			CUPY_NVCC_GENERATE_CODE+="arch=${target/sm/compute},code=${target};"
 		done
 		export CUPY_NVCC_GENERATE_CODE
+		export NVCC="nvcc ${NVCCFLAGS}"
 
 		NDEV="/dev/nvidia-uvm-tools"
 		[[ -e ${NDEV} ]] || die \
