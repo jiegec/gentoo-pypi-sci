@@ -5,6 +5,7 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{10..11} )
 ROCM_VERSION=5.1.3
+DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 prefix pypi rocm cuda
