@@ -8,14 +8,12 @@ DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1 pypi
 
 DESCRIPTION="Manipulate JSON-like data with NumPy-like idioms."
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
-HOMEPAGE="https://github.com/scikit-hep/awkward-1.0"
+HOMEPAGE="https://github.com/scikit-hep/awkward"
 
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
 IUSE=""
-RDEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
-	>=dev-python/numpy-1.13.1[${PYTHON_USEDEP}]"
+RDEPEND="dev-python/awkward-cpp[${PYTHON_USEDEP}]"
 distutils_enable_tests pytest

@@ -4,4 +4,8 @@
 	<maintainer type="person">
 		<email>heroxbd@gentoo.org</email>
 	</maintainer>
+	<upstream>
+		<remote-id type="github">scikit-hep/awkward</remote-id>
+		<remote-id type="pypi">awkward</remote-id>
+	</upstream>
 </pkgmetadata>
