@@ -4,6 +4,7 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_{9..11} )
+DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 prefix pypi
 
@@ -15,12 +16,12 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RESTRICT="network-sandbox"
 IUSE="test"
 RDEPEND=">=dev-python/alembic-1.4[${PYTHON_USEDEP}]
 	>=dev-python/async_generator-1.9[${PYTHON_USEDEP}]
 	>=dev-python/certipy-0.1.2[${PYTHON_USEDEP}]
 	>=dev-python/jinja-2.11.0[${PYTHON_USEDEP}]
+	dev-python/jupyter-client[${PYTHON_USEDEP}]
 	>=dev-python/jupyter_telemetry-0.1.0[${PYTHON_USEDEP}]
 	>=dev-python/oauthlib-3.0[${PYTHON_USEDEP}]
 	dev-python/packaging[${PYTHON_USEDEP}]
