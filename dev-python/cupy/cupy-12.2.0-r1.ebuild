@@ -14,7 +14,7 @@ DESCRIPTION="CuPy: A NumPy-compatible array library accelerated by CUDA"
 SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="https://cupy.dev/"
 
-IUSE="rocm +cuda cudnn float19"
+IUSE="rocm +cuda cudnn"
 REQUIRED_USE="
 	^^ ( cuda rocm )
 	cudnn? ( cuda )
@@ -42,13 +42,11 @@ RDEPEND=">=dev-python/fastrlock-0.8.1
 
 distutils_enable_tests pytest
 
-PATCHES=( "${FILESDIR}"/${PN}-11.6-add_dir.patch
-	"${FILESDIR}"/${PN}-12.1.0-reenable-HCC_AMDGPU_TARGET.patch )
+PATCHES=( "${FILESDIR}"/${PN}-11.6-add_dir.patch )
 
 src_prepare ()
 {
 	default
-	use float19 || eapply "${FILESDIR}"/${PN}-11_disable-gemmEx.patch
 	eprefixify cupy/cuda/compiler.py
 	use cuda && cuda_src_prepare
 }
