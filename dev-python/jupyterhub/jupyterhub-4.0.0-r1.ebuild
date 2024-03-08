@@ -9,7 +9,6 @@ DISTUTILS_USE_PEP517=setuptools
 inherit distutils-r1 prefix pypi
 
 DESCRIPTION="JupyterHub: A multi-user server for Jupyter notebooks"
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="https://jupyter.org"
 
 LICENSE="BSD"

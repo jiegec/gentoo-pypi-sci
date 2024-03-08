@@ -8,7 +8,6 @@ PYTHON_COMPAT=( python3_{9..11} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Weighted quantiles, including weighted median, based on numpy"
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="https://github.com/nudomarinero/wquantiles/"
 
 LICENSE="MIT"

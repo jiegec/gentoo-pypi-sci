@@ -8,7 +8,6 @@ PYTHON_COMPAT=( python3_{9..11} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Extended PDG particle data and MC identification codes"
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="https://github.com/scikit-hep/particle"
 
 LICENSE="BSD"

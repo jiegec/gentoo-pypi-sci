@@ -8,7 +8,6 @@ DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1 pypi
 
 DESCRIPTION="ROOT I/O in pure Python and NumPy."
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="https://github.com/scikit-hep/uproot4"
 
 LICENSE="BSD"

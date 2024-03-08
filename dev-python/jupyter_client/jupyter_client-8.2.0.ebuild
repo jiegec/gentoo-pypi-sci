@@ -7,7 +7,6 @@ PYTHON_COMPAT=( python3_{9..11} )
 
 
 DESCRIPTION="it has been replaced by jupyter-client::gentoo, keep it for IRkernel"
-SRC_URI=""
 HOMEPAGE="https://jupyter.org"
 
 LICENSE="BSD"

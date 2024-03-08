@@ -9,7 +9,6 @@ DISTUTILS_USE_PEP517=setuptools
 inherit distutils-r1 pypi
 
 DESCRIPTION="Tweedie distribution estimations of pdf and cdf"
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="https://github.com/thequackdaddy/tweedie"
 
 LICENSE="BSD"

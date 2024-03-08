@@ -8,7 +8,6 @@ PYTHON_COMPAT=( python3_{9..11} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Python library for fast multi-threaded data manipulation and munging."
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="https://github.com/h2oai/datatable"
 
 LICENSE="Mozilla Public License v2.0"

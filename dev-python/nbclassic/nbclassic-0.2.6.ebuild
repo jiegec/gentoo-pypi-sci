@@ -8,7 +8,6 @@ PYTHON_COMPAT=( python3_{9..11} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Jupyter Notebook as a Jupyter Server Extension."
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="http://jupyter.org"
 
 LICENSE="BSD"

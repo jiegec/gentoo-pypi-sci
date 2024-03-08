@@ -9,7 +9,6 @@ DISTUTILS_EXT=1
 inherit distutils-r1 pypi
 
 DESCRIPTION="Stockwell transform for Python"
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="https://github.com/claudiodsf/stockwell"
 
 LICENSE="GPL-3"

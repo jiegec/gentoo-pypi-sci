@@ -8,7 +8,6 @@ PYTHON_COMPAT=( python3_{9..11} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Matplotlib Jupyter Extension"
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="http://matplotlib.org"
 
 LICENSE="BSD"

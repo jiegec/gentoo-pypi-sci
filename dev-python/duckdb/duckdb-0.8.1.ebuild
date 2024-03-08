@@ -9,7 +9,6 @@ DISTUTILS_EXT=1
 inherit distutils-r1 pypi
 
 DESCRIPTION="DuckDB embedded database"
-SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 HOMEPAGE="https://www.duckdb.org"
 
 LICENSE="MIT"
