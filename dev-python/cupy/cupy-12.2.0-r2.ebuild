@@ -31,12 +31,12 @@ DEPEND="
 	cudnn? ( dev-libs/cudnn )
 	rocm? ( >=dev-util/hip-${ROCM_VERSION}
 		>=dev-util/roctracer-${ROCM_VERSION}
-		>=sci-libs/hipBLAS-${ROCM_VERSION}[${ROCM_USEDEP}]
-		>=sci-libs/hipCUB-${ROCM_VERSION}[${ROCM_USEDEP}]
-		>=sci-libs/hipFFT-${ROCM_VERSION}[${ROCM_USEDEP}]
-		>=sci-libs/hipRAND-${ROCM_VERSION}[${ROCM_USEDEP}]
-		>=sci-libs/rocThrust-${ROCM_VERSION}[${ROCM_USEDEP}]
-		>=sci-libs/hipSPARSE-${ROCM_VERSION}[${ROCM_USEDEP}] )"
+		>=sci-libs/hipBLAS-${ROCM_VERSION}:=[${ROCM_USEDEP}]
+		>=sci-libs/hipCUB-${ROCM_VERSION}:=[${ROCM_USEDEP}]
+		>=sci-libs/hipFFT-${ROCM_VERSION}:=[${ROCM_USEDEP}]
+		>=sci-libs/hipRAND-${ROCM_VERSION}:=[${ROCM_USEDEP}]
+		>=sci-libs/rocThrust-${ROCM_VERSION}:=[${ROCM_USEDEP}]
+		>=sci-libs/hipSPARSE-${ROCM_VERSION}:=[${ROCM_USEDEP}] )"
 RDEPEND=">=dev-python/fastrlock-0.8.1
 	${DEPEND}"
 
