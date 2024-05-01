@@ -24,8 +24,4 @@ RDEPEND="dev-python/numpy[${PYTHON_USEDEP}]
 "
 DEPEND="${RDEPEND}"
 
-PATCHES=( "${FILESDIR}"/${PN}-0.8.1-drop-py36.patch
-		  "${FILESDIR}"/${PN}-0.8.1-return-type.patch
-		)
-
 distutils_enable_tests pytest
