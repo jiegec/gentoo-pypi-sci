@@ -3,8 +3,8 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..11} )
-ROCM_VERSION=5.1.3
+PYTHON_COMPAT=( python3_11 )
+ROCM_VERSION=6.1.0
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
 
@@ -42,7 +42,10 @@ RDEPEND=">=dev-python/fastrlock-0.8.1
 
 distutils_enable_tests pytest
 
-PATCHES=( "${FILESDIR}"/${PN}-11.6-add_dir.patch )
+PATCHES=(
+	"${FILESDIR}"/${PN}-13.1-rocm6.patch
+	"${FILESDIR}"/${PN}-12.2-add_dir.patch
+)
 
 src_prepare ()
 {
