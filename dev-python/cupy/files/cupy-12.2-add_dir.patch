@@ -1,7 +1,7 @@
-Index: cupy-13.1.0/install/cupy_builder/install_build.py
+Index: cupy-12.2.0/install/cupy_builder/install_build.py
 ===================================================================
---- cupy-13.1.0.orig/install/cupy_builder/install_build.py
-+++ cupy-13.1.0/install/cupy_builder/install_build.py
+--- cupy-12.2.0.orig/install/cupy_builder/install_build.py
++++ cupy-12.2.0/install/cupy_builder/install_build.py
 @@ -151,7 +151,6 @@ def get_compiler_setting(ctx: Context, u
  
      if rocm_path:
@@ -18,16 +18,16 @@ Index: cupy-13.1.0/install/cupy_builder/install_build.py
  
      if use_hip:
          extra_compile_args.append('-std=c++11')
-Index: cupy-13.1.0/install/cupy_builder/_compiler.py
+Index: cupy-12.2.0/install/cupy_builder/_compiler.py
 ===================================================================
---- cupy-13.1.0.orig/install/cupy_builder/_compiler.py
-+++ cupy-13.1.0/install/cupy_builder/_compiler.py
-@@ -218,7 +218,7 @@ class DeviceCompilerUnix(DeviceCompilerB
-         base_opts = build.get_compiler_base_options(rocm_path)
+--- cupy-12.2.0.orig/install/cupy_builder/_compiler.py
++++ cupy-12.2.0/install/cupy_builder/_compiler.py
+@@ -236,7 +236,7 @@ class DeviceCompilerUnix(DeviceCompilerB
          compiler_so = rocm_path
  
+         hip_version = build.get_hip_version()
 -        postargs = ['-O2', '-fPIC', '--include', 'hip_runtime.h']
 +        postargs = ['-O2', '-fPIC', '--include', 'hip/hip_runtime.h']
-         # Note: we only support ROCm 4.3+ since CuPy v11.0.0.
-         # Bumping C++ standard from C++14 to C++17 for "if constexpr"
-         postargs += ['--std=c++17']
+         if hip_version >= 402:
+             postargs += ['--std=c++14']
+         else:

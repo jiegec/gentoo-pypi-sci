@@ -1,0 +1,156 @@
+https://github.com/cupy/cupy/pull/8457
+From cc1893ef5dafb7cec646a1cc28dad674cfee5a73 Mon Sep 17 00:00:00 2001
+From: Yiyang Wu <xgreenlandforwyy@gmail.com>
+Date: Tue, 6 Aug 2024 22:11:08 +0800
+Subject: [PATCH 1/3] Allow Cython-3 and resolve compilation errors
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+cupy/_core/_kernel.pyx:1159:24: '__module__' redeclared
+Fixed by removing "readonly object __module__"
+
+cupy/_core/dlpack.pyx:152:25: Cannot assign type 'void (DLManagedTensor *) except * nogil' to 'void (*)(DLManagedTensor *) noexcept'. Exception values are incompatible. Suggest adding 'noexcept' to the type of 'deleter'.
+cupy/_core/dlpack.pyx:154:57: Cannot assign type 'void (object) except *' to 'PyCapsule_Destructor' (alias of 'void (*)(object) noexcept'). Exception values are incompatible. Suggest adding 'noexcept' to the type of 'pycapsule_deleter'.
+Fixed by adding noexcept to those functions
+
+Closes: https://github.com/cupy/cupy/issues/4610
+Signed-off-by: Yiyang Wu <xgreenlandforwyy@gmail.com>
+Signed-off-by: 武益阳 Yiyang Wu <xgreenlandforwyy@gmail.com>
+---
+ cupy/_core/_kernel.pyx | 1 -
+ cupy/_core/dlpack.pyx  | 4 ++--
+ setup.py               | 4 ++--
+ 3 files changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/cupy/_core/_kernel.pyx b/cupy/_core/_kernel.pyx
+index 59b4bbace..dee3dbc1e 100644
+--- a/cupy/_core/_kernel.pyx
++++ b/cupy/_core/_kernel.pyx
+@@ -1156,7 +1156,6 @@ cdef class ufunc:
+         readonly object _doc
+         public object __doc__
+         readonly object __name__
+-        readonly object __module__
+ 
+     def __init__(
+             self, name, nin, nout, _Ops ops, preamble='', loop_prep='', doc='',
+diff --git a/cupy/_core/dlpack.pyx b/cupy/_core/dlpack.pyx
+index 1da7155b8..e533c95e8 100644
+--- a/cupy/_core/dlpack.pyx
++++ b/cupy/_core/dlpack.pyx
+@@ -75,7 +75,7 @@ def get_build_version():
+     return str(DLPACK_VERSION)
+ 
+ 
+-cdef void pycapsule_deleter(object dltensor):
++cdef void pycapsule_deleter(object dltensor) noexcept:
+     cdef DLManagedTensor* dlm_tensor
+     # Do not invoke the deleter on a used capsule
+     if cpython.PyCapsule_IsValid(dltensor, 'dltensor'):
+@@ -84,7 +84,7 @@ cdef void pycapsule_deleter(object dltensor):
+         dlm_tensor.deleter(dlm_tensor)
+ 
+ 
+-cdef void deleter(DLManagedTensor* tensor) with gil:
++cdef void deleter(DLManagedTensor* tensor) noexcept:
+     if tensor.manager_ctx is NULL:
+         return
+     stdlib.free(tensor.dl_tensor.shape)
+diff --git a/setup.py b/setup.py
+index d6ffeac59..86849a4e3 100644
+--- a/setup.py
++++ b/setup.py
+@@ -19,7 +19,7 @@ if not cupy_builder.preflight_check(ctx):
+ 
+ # TODO(kmaehashi): migrate to pyproject.toml (see #4727, #4619)
+ setup_requires = [
+-    'Cython>=0.29.22,<3',
++    'Cython>=0.29.22',
+     'fastrlock>=0.5',
+ ]
+ install_requires = [
+@@ -29,7 +29,7 @@ install_requires = [
+ extras_require = {
+     'all': [
+         'scipy>=1.7,<1.14',  # see #4773
+-        'Cython>=0.29.22,<3',
++        'Cython>=0.29.22',
+         'optuna>=2.0',
+     ],
+     # TODO(kmaehashi): remove stylecheck and update the contribution guide
+-- 
+2.45.2
+
+
+From 995bea32222be8ad4699c612287687e27bc92e83 Mon Sep 17 00:00:00 2001
+From: Yiyang Wu <xgreenlandforwyy@gmail.com>
+Date: Tue, 6 Aug 2024 22:14:01 +0800
+Subject: [PATCH 2/3] Let reversed method same as normal for special binary
+ operator
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Compatible with Cython-0.x
+
+Bug: https://github.com/cupy/cupy/issues/5893
+Signed-off-by: Yiyang Wu <xgreenlandforwyy@gmail.com>
+Signed-off-by: 武益阳 Yiyang Wu <xgreenlandforwyy@gmail.com>
+---
+ install/cupy_builder/_command.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/install/cupy_builder/_command.py b/install/cupy_builder/_command.py
+index 6d264c8a4..d93c45318 100644
+--- a/install/cupy_builder/_command.py
++++ b/install/cupy_builder/_command.py
+@@ -105,6 +105,9 @@ class custom_build_ext(setuptools.command.build_ext.build_ext):
+             'profile': ctx.profile,
+             # Embed signatures for Sphinx documentation.
+             'embedsignature': True,
++            # Allow not implementing reversed method
++            # https://github.com/cupy/cupy/issues/5893#issuecomment-944909015
++            'c_api_binop_methods': True,
+         }
+ 
+         # Compile-time constants to be used in Cython code
+-- 
+2.45.2
+
+
+From 4e09cd7c70307f2133e8d21fc29188c5c74c94c3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=E6=AD=A6=E7=9B=8A=E9=98=B3=20Yiyang=20Wu?=
+ <xgreenlandforwyy@gmail.com>
+Date: Sat, 19 Oct 2024 21:38:41 +0800
+Subject: [PATCH 3/3] Cython-3 generate extern "C++". cupy_thrust.cu should use
+ extern "C++"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Reference: https://github.com/cupy/cupy/pull/8457#issuecomment-2423850286
+Signed-off-by: Yiyang Wu <xgreenlandforwyy@gmail.com>
+Signed-off-by: 武益阳 Yiyang Wu <xgreenlandforwyy@gmail.com>
+---
+ cupy/cuda/cupy_thrust.cu | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cupy/cuda/cupy_thrust.cu b/cupy/cuda/cupy_thrust.cu
+index 7631913f4..3272bf58a 100644
+--- a/cupy/cuda/cupy_thrust.cu
++++ b/cupy/cuda/cupy_thrust.cu
+@@ -36,8 +36,8 @@ namespace cuda {
+ #endif // #if CUPY_USE_HIP
+ 
+ 
+-extern "C" char *cupy_malloc(void *, size_t);
+-extern "C" void cupy_free(void *, char *);
++extern "C++" char *cupy_malloc(void *, size_t);
++extern "C++" void cupy_free(void *, char *);
+ 
+ 
+ class cupy_allocator {
+-- 
+2.45.2
+
