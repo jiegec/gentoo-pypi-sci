@@ -3,7 +3,8 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9..11} )
+DISTUTILS_USE_PEP517=hatchling
+PYTHON_COMPAT=( python3_{9..12} )
 
 inherit distutils-r1 pypi
 
@@ -24,11 +25,17 @@ DEPEND="
 	dev-python/traitlets[${PYTHON_USEDEP}]
 	dev-python/ipywidgets[${PYTHON_USEDEP}]
 	dev-python/matplotlib[${PYTHON_USEDEP}]
+	dev-python/jupyterlab-widgets[${PYTHON_USEDEP}]
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
 distutils_enable_tests pytest
+
+src_install() {
+	distutils-r1_src_install
+	rm "${ED}"/usr/etc/ -rv || die
+}
 
 pkg_postinst() {
 		ewarn "${P} works for jupyter-matplotlib-0.11.3"
