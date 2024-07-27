@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9..11} )
+PYTHON_COMPAT=( python3_1{0..2} )
 DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1 pypi
 
@@ -16,6 +16,6 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 IUSE=""
-RDEPEND="dev-python/awkward[${PYTHON_USEDEP}]
+RDEPEND="dev-python/awkward-pandas[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]"
 distutils_enable_tests pytest
