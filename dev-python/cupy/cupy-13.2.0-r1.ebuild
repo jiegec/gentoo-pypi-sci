@@ -25,7 +25,6 @@ SLOT="0"
 KEYWORDS="~amd64"
 DEPEND="
 	>=dev-python/cython-0.29.22[${PYTHON_USEDEP}]
-	<dev-python/cython-3[${PYTHON_USEDEP}]
 	>=dev-python/numpy-1.18.0[${PYTHON_USEDEP}]
 	cuda? ( dev-util/nvidia-cuda-toolkit[profiler] )
 	cudnn? ( dev-libs/cudnn )
@@ -45,6 +44,7 @@ distutils_enable_tests pytest
 PATCHES=(
 	"${FILESDIR}"/${PN}-13.1-rocm6.patch
 	"${FILESDIR}"/${PN}-13.1-add_dir.patch
+	"${FILESDIR}"/${PN}-13.2-cython3.patch
 )
 
 src_prepare ()

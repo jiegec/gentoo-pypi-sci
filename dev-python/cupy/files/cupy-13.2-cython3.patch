@@ -1,0 +1,143 @@
+From 3309d837ae5d2f2b8041bd82e8691ad309648d82 Mon Sep 17 00:00:00 2001
+From: Yiyang Wu <xgreenlandforwyy@gmail.com>
+Date: Tue, 6 Aug 2024 18:29:50 +0800
+Subject: [PATCH] Resolve cython errors, and keep backward compatibility
+
+Set c_api_binop_methods=True
+
+Error compiling Cython file:
+------------------------------------------------------------
+...
+        readonly dict _routine_cache
+        readonly dict _kernel_memo
+        readonly object _doc
+        public object __doc__
+        readonly object __name__
+        readonly object __module__
+                        ^
+------------------------------------------------------------
+
+cupy/_core/_kernel.pyx:1159:24: '__module__' redeclared
+
+Error compiling Cython file:
+------------------------------------------------------------
+...
+        readonly dict _routine_cache
+        readonly dict _kernel_memo
+        readonly object _doc
+        public object __doc__
+        readonly object __name__
+        readonly object __module__
+        ^
+------------------------------------------------------------
+
+Error compiling Cython file:
+------------------------------------------------------------
+...
+    dtype.lanes = <uint16_t>1
+    dtype.bits = <uint8_t>(array.dtype.itemsize * 8)
+
+    dlm_tensor.manager_ctx = <void*>array
+    cpython.Py_INCREF(array)
+    dlm_tensor.deleter = deleter
+                         ^
+------------------------------------------------------------
+
+cupy/_core/dlpack.pyx:152:25: Cannot assign type 'void (DLManagedTensor *) except * nogil' to 'void (*)(DLManagedTensor *) noexcept'. Exception values are incompatible. Suggest adding 'noexcept' to the type of 'deleter'.
+
+Error compiling Cython file:
+------------------------------------------------------------
+...
+
+    dlm_tensor.manager_ctx = <void*>array
+    cpython.Py_INCREF(array)
+    dlm_tensor.deleter = deleter
+
+    return cpython.PyCapsule_New(dlm_tensor, 'dltensor', pycapsule_deleter)
+                                                         ^
+------------------------------------------------------------
+
+Error compiling Cython file:
+------------------------------------------------------------
+...
+
+    dlm_tensor.manager_ctx = <void*>array
+    cpython.Py_INCREF(array)
+    dlm_tensor.deleter = deleter
+
+    return cpython.PyCapsule_New(dlm_tensor, 'dltensor', pycapsule_deleter)
+                                                         ^
+------------------------------------------------------------
+
+cupy/_core/dlpack.pyx:154:57: Cannot assign type 'void (object) except *' to 'PyCapsule_Destructor' (alias of 'void (*)(object) noexcept'). Exception values are incompatible. Suggest adding 'noexcept' to the type of 'pycapsule_deleter'.
+
+Error compiling Cython file:
+------------------------------------------------------------
+...
+
+cdef void deleter(DLManagedTensor* tensor) noexcept nogil:
+    if tensor.manager_ctx is NULL:
+        return
+    stdlib.free(tensor.dl_tensor.shape)
+    cpython.Py_DECREF(<_ndarray_base>tensor.manager_ctx)
+                     ^
+------------------------------------------------------------
+
+Signed-off-by: Yiyang Wu <xgreenlandforwyy@gmail.com>
+---
+ cupy/_core/_kernel.pyx           | 1 -
+ cupy/_core/dlpack.pyx            | 4 ++--
+ install/cupy_builder/_command.py | 3 +++
+ 3 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/cupy/_core/_kernel.pyx b/cupy/_core/_kernel.pyx
+index 59b4bbace..dee3dbc1e 100644
+--- a/cupy/_core/_kernel.pyx
++++ b/cupy/_core/_kernel.pyx
+@@ -1156,7 +1156,6 @@ cdef class ufunc:
+         readonly object _doc
+         public object __doc__
+         readonly object __name__
+-        readonly object __module__
+ 
+     def __init__(
+             self, name, nin, nout, _Ops ops, preamble='', loop_prep='', doc='',
+diff --git a/cupy/_core/dlpack.pyx b/cupy/_core/dlpack.pyx
+index 1da7155b8..e533c95e8 100644
+--- a/cupy/_core/dlpack.pyx
++++ b/cupy/_core/dlpack.pyx
+@@ -75,7 +75,7 @@ def get_build_version():
+     return str(DLPACK_VERSION)
+ 
+ 
+-cdef void pycapsule_deleter(object dltensor):
++cdef void pycapsule_deleter(object dltensor) noexcept:
+     cdef DLManagedTensor* dlm_tensor
+     # Do not invoke the deleter on a used capsule
+     if cpython.PyCapsule_IsValid(dltensor, 'dltensor'):
+@@ -84,7 +84,7 @@ cdef void pycapsule_deleter(object dltensor):
+         dlm_tensor.deleter(dlm_tensor)
+ 
+ 
+-cdef void deleter(DLManagedTensor* tensor) with gil:
++cdef void deleter(DLManagedTensor* tensor) noexcept:
+     if tensor.manager_ctx is NULL:
+         return
+     stdlib.free(tensor.dl_tensor.shape)
+diff --git a/install/cupy_builder/_command.py b/install/cupy_builder/_command.py
+index 6d264c8a4..d93c45318 100644
+--- a/install/cupy_builder/_command.py
++++ b/install/cupy_builder/_command.py
+@@ -105,6 +105,9 @@ class custom_build_ext(setuptools.command.build_ext.build_ext):
+             'profile': ctx.profile,
+             # Embed signatures for Sphinx documentation.
+             'embedsignature': True,
++            # Allow not implementing reversed method
++            # https://github.com/cupy/cupy/issues/5893#issuecomment-944909015
++            'c_api_binop_methods': True,
+         }
+ 
+         # Compile-time constants to be used in Cython code
+-- 
+2.43.0
+
