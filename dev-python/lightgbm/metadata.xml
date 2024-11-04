@@ -7,4 +7,8 @@
   <use>
     <flag name="dask">Use dask for calculation.</flag>
   </use>
+  <upstream>
+    <remote-id type="github">microsoft/LightGBM</remote-id>
+    <remote-id type="pypi">Lightgbm</remote-id>
+  </upstream>
 </pkgmetadata>
