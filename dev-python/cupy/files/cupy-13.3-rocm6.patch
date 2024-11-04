@@ -1,8 +1,7 @@
-https://github.com/cupy/cupy/pull/8319
-From 39382bab4c85b92ac2a33e603471faed63c39003 Mon Sep 17 00:00:00 2001
+From d2b2de6ca617895eabda349b712856ad7fef2af9 Mon Sep 17 00:00:00 2001
 From: Nakano Azusa <31366253+Azusachan@users.noreply.github.com>
 Date: Fri, 3 May 2024 01:00:51 +0800
-Subject: [PATCH 1/2] Support Build on ROCM >= 6.0.0
+Subject: [PATCH 1/5] Support Build on ROCM >= 6.0.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -12,6 +11,8 @@ ROCm 6 introduced various changes on its API. In particular,
 * Renaming of ‘memoryType’ in hipPointerAttribute_t structure to ‘type’
 
 This patch allows cupy to be built on this version.
+
+Signed-off-by: Yiyang Wu <xgreenlandforwyy@gmail.com>
 ---
  cupy_backends/cuda/api/_runtime_typedef.pxi |  8 +++++++-
  cupy_backends/cuda/api/runtime.pyx          | 11 +++++++++--
@@ -20,7 +21,7 @@ This patch allows cupy to be built on this version.
  4 files changed, 24 insertions(+), 6 deletions(-)
 
 diff --git a/cupy_backends/cuda/api/_runtime_typedef.pxi b/cupy_backends/cuda/api/_runtime_typedef.pxi
-index e9e243ee44b..053a6eccd38 100644
+index 6f01ea12e..707b62b64 100644
 --- a/cupy_backends/cuda/api/_runtime_typedef.pxi
 +++ b/cupy_backends/cuda/api/_runtime_typedef.pxi
 @@ -138,12 +138,18 @@ cdef extern from *:
@@ -44,7 +45,7 @@ index e9e243ee44b..053a6eccd38 100644
          ctypedef struct _PointerAttributes 'cudaPointerAttributes':
              pass  # for RTD
 diff --git a/cupy_backends/cuda/api/runtime.pyx b/cupy_backends/cuda/api/runtime.pyx
-index 58cb5af54fe..d2d0e4585c0 100644
+index 2eff20048..5abb94ae0 100644
 --- a/cupy_backends/cuda/api/runtime.pyx
 +++ b/cupy_backends/cuda/api/runtime.pyx
 @@ -318,7 +318,6 @@ cpdef getDeviceProperties(int device):
@@ -85,7 +86,7 @@ index 58cb5af54fe..d2d0e4585c0 100644
          return None
  
 diff --git a/cupy_backends/hip/cupy_hip_runtime.h b/cupy_backends/hip/cupy_hip_runtime.h
-index 3a1e4efd910..3c1cf5c404c 100644
+index 51a54323e..caa4419c7 100644
 --- a/cupy_backends/hip/cupy_hip_runtime.h
 +++ b/cupy_backends/hip/cupy_hip_runtime.h
 @@ -270,12 +270,12 @@ cudaError_t cudaPointerGetAttributes(cudaPointerAttributes *attributes,
@@ -105,10 +106,10 @@ index 3a1e4efd910..3c1cf5c404c 100644
              default:
                  /* we don't care the rest of possibilities */
 diff --git a/install/cupy_builder/install_build.py b/install/cupy_builder/install_build.py
-index 720917e0fc3..55f15ded2ec 100644
+index 37635528d..d3a016532 100644
 --- a/install/cupy_builder/install_build.py
 +++ b/install/cupy_builder/install_build.py
-@@ -155,6 +155,11 @@ def get_compiler_setting(ctx: Context, use_hip):
+@@ -160,6 +160,11 @@ def get_compiler_setting(ctx: Context, use_hip):
          include_dirs.append(os.path.join(rocm_path, 'include', 'rocrand'))
          include_dirs.append(os.path.join(rocm_path, 'include', 'hiprand'))
          include_dirs.append(os.path.join(rocm_path, 'include', 'roctracer'))
@@ -120,18 +121,22 @@ index 720917e0fc3..55f15ded2ec 100644
          library_dirs.append(os.path.join(rocm_path, 'lib'))
  
      if use_hip:
+-- 
+2.47.0
 
-From 8a6754773c21338c1cef770ca73af27fa50ef88a Mon Sep 17 00:00:00 2001
+
+From 4d5a497d0725b803642cf9e7bd4b7d1f3f3ee2a1 Mon Sep 17 00:00:00 2001
 From: Nakano Azusa <31366253+Azusachan@users.noreply.github.com>
 Date: Fri, 3 May 2024 01:05:13 +0800
-Subject: [PATCH 2/2] add macro for cupy_hip_runtime.h
+Subject: [PATCH 2/5] add macro for cupy_hip_runtime.h
 
+Signed-off-by: Yiyang Wu <xgreenlandforwyy@gmail.com>
 ---
  cupy_backends/hip/cupy_hip_runtime.h | 10 ++++++++++
  1 file changed, 10 insertions(+)
 
 diff --git a/cupy_backends/hip/cupy_hip_runtime.h b/cupy_backends/hip/cupy_hip_runtime.h
-index 3c1cf5c404c..3b76357ce60 100644
+index caa4419c7..ce4c3ec0a 100644
 --- a/cupy_backends/hip/cupy_hip_runtime.h
 +++ b/cupy_backends/hip/cupy_hip_runtime.h
 @@ -270,6 +270,7 @@ cudaError_t cudaPointerGetAttributes(cudaPointerAttributes *attributes,
@@ -158,17 +163,23 @@ index 3c1cf5c404c..3b76357ce60 100644
              default:
                  /* we don't care the rest of possibilities */
                  return status;
-From 2ff608e5b026f89a4edb25aa7b4a38f8fdb25a4f Mon Sep 17 00:00:00 2001
-From: Selene <lixueying@mail.bnu.edu.cn>
-Date: Thu, 23 May 2024 20:41:14 +0800
-Subject: [PATCH] Add ROCm 6 in runtime_version
+-- 
+2.47.0
 
+
+From c8dd226892fe212885fa07011cea09d40caf69ab Mon Sep 17 00:00:00 2001
+From: Nakano Azusa <31366253+Azusachan@users.noreply.github.com>
+Date: Tue, 11 Jun 2024 18:05:10 +1000
+Subject: [PATCH 3/5] address reviewers' concerns.
+
+Signed-off-by: Yiyang Wu <xgreenlandforwyy@gmail.com>
 ---
- cupy_backends/cuda/libs/_cnvrtc.pxi | 3 +++
- 1 file changed, 3 insertions(+)
+ cupy_backends/cuda/libs/_cnvrtc.pxi  | 3 +++
+ cupy_backends/hip/cupy_hip_runtime.h | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/cupy_backends/cuda/libs/_cnvrtc.pxi b/cupy_backends/cuda/libs/_cnvrtc.pxi
-index 9f02b5522..b2b06aa4f 100644
+index 9f02b5522..285475036 100644
 --- a/cupy_backends/cuda/libs/_cnvrtc.pxi
 +++ b/cupy_backends/cuda/libs/_cnvrtc.pxi
 @@ -139,5 +139,8 @@ cdef SoftLink _get_softlink():
@@ -176,10 +187,77 @@ index 9f02b5522..b2b06aa4f 100644
              # ROCm 5.x
              libname = 'libamdhip64.so.5'
 +        elif runtime_version < 7_00_00000:
-+            # ROCm 7.x
++            # ROCm 6.x
 +            libname = 'libamdhip64.so.6'
  
      return SoftLink(libname, prefix, mandatory=True)
+diff --git a/cupy_backends/hip/cupy_hip_runtime.h b/cupy_backends/hip/cupy_hip_runtime.h
+index ce4c3ec0a..cfe7c74b7 100644
+--- a/cupy_backends/hip/cupy_hip_runtime.h
++++ b/cupy_backends/hip/cupy_hip_runtime.h
+@@ -278,7 +278,7 @@ cudaError_t cudaPointerGetAttributes(cudaPointerAttributes *attributes,
+             case 1 /* hipMemoryTypeDevice */:
+                 attributes->type = (hipMemoryType)2; /* cudaMemoryTypeDevice */
+                 return status;
+-#elif
++#else
+        switch (attributes->memoryType) {
+             case 0 /* hipMemoryTypeHost */:
+                 attributes->memoryType = (hipMemoryType)1; /* cudaMemoryTypeHost */
 -- 
-2.44.0
+2.47.0
+
+
+From 24659d2605a2c0773ffe177f2d653c074b87c489 Mon Sep 17 00:00:00 2001
+From: Kenichi Maehashi <939877+kmaehashi@users.noreply.github.com>
+Date: Tue, 17 Sep 2024 18:33:02 +0900
+Subject: [PATCH 4/5] fix lint error
+
+Signed-off-by: Yiyang Wu <xgreenlandforwyy@gmail.com>
+---
+ cupy_backends/cuda/api/runtime.pyx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cupy_backends/cuda/api/runtime.pyx b/cupy_backends/cuda/api/runtime.pyx
+index 5abb94ae0..b1b885ecf 100644
+--- a/cupy_backends/cuda/api/runtime.pyx
++++ b/cupy_backends/cuda/api/runtime.pyx
+@@ -350,7 +350,7 @@ cpdef getDeviceProperties(int device):
+         arch['has3dGrid'] = props.arch.has3dGrid
+         arch['hasDynamicParallelism'] = props.arch.hasDynamicParallelism
+         properties['arch'] = arch
+-    IF CUPY_HIP_VERSION < 600: # removed in HIP 6.0.0
++    IF CUPY_HIP_VERSION < 600:  # removed in HIP 6.0.0
+         properties['gcnArch'] = props.gcnArch
+     IF CUPY_HIP_VERSION >= 310:
+         properties['gcnArchName'] = props.gcnArchName
+-- 
+2.47.0
+
+
+From 27fa13f7412a724e0b57ec20431144d0d60765ca Mon Sep 17 00:00:00 2001
+From: Kenichi Maehashi <webmaster@kenichimaehashi.com>
+Date: Tue, 17 Sep 2024 14:26:20 +0000
+Subject: [PATCH 5/5] fix build failure on CUDA
+
+Signed-off-by: Yiyang Wu <xgreenlandforwyy@gmail.com>
+---
+ cupy_backends/cuda/api/runtime.pyx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cupy_backends/cuda/api/runtime.pyx b/cupy_backends/cuda/api/runtime.pyx
+index b1b885ecf..6cdccf347 100644
+--- a/cupy_backends/cuda/api/runtime.pyx
++++ b/cupy_backends/cuda/api/runtime.pyx
+@@ -350,7 +350,7 @@ cpdef getDeviceProperties(int device):
+         arch['has3dGrid'] = props.arch.has3dGrid
+         arch['hasDynamicParallelism'] = props.arch.hasDynamicParallelism
+         properties['arch'] = arch
+-    IF CUPY_HIP_VERSION < 600:  # removed in HIP 6.0.0
++    IF 0 < CUPY_HIP_VERSION < 600:  # removed in HIP 6.0.0
+         properties['gcnArch'] = props.gcnArch
+     IF CUPY_HIP_VERSION >= 310:
+         properties['gcnArchName'] = props.gcnArchName
+-- 
+2.47.0
 
