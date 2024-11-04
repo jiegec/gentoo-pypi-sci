@@ -42,7 +42,7 @@ RDEPEND=">=dev-python/fastrlock-0.8.1
 distutils_enable_tests pytest
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-13.1-rocm6.patch
+	"${FILESDIR}"/${PN}-13.3-rocm6.patch
 	"${FILESDIR}"/${PN}-13.1-add_dir.patch
 	"${FILESDIR}"/${PN}-13.2-cython3.patch
 )
