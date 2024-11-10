@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake cuda
 
 DESCRIPTION="LightGBM Python Package"
 HOMEPAGE="https://github.com/microsoft/LightGBM"
@@ -13,12 +13,13 @@ SRC_URI="https://github.com/microsoft/LightGBM/archive/refs/tags/v${PV}.tar.gz -
 	https://github.com/lemire/fast_double_parser/archive/efec0353.tar.gz -> fast_double_parser-efec0353.tar.gz
 	https://github.com/fmtlib/fmt/archive/f5e54359.tar.gz -> fmt-f5e54359.tar.gz"
 S="${WORKDIR}/LightGBM-${PV}"
-# https://gitlab.com/api/v4/projects/libeigen%2Feigen/repository/archive.tar.gz?sha=3147391d -> eigen-3147391d.tar.g
 
 LICENSE="MIT"
 SLOT="0"
+IUSE="cuda"
 KEYWORDS="~amd64"
 
+RDEPEND="cuda? ( >=dev-util/nvidia-cuda-toolkit-11 )"
 DEPEND=">=dev-cpp/eigen-3.4"
 
 PATCHES=( "${FILESDIR}"/${PN}-4.5.0-eigen3.patch
@@ -26,9 +27,23 @@ PATCHES=( "${FILESDIR}"/${PN}-4.5.0-eigen3.patch
 
 src_prepare() {
 	rmdir external_libs/compute && ln -sv "${WORKDIR}"/compute-36350b7de849300bd3d72a05d8bf890ca405a014 external_libs/compute
-	# rmdir external_libs/eigen && ln -sv "${WORKDIR}"/eigen-3147391d946bb4b6c68edd901f2add6ac1f31f8c external_libs/eigen
 	rmdir external_libs/fast_double_parser/benchmarks/dependencies/double-conversion && ln -sv "${WORKDIR}"/double-conversion-f4cb2384efa55dee0e6652f8674b05763441ab09 external_libs/fast_double_parser/benchmarks/dependencies/double-conversion
 	rmdir external_libs/fast_double_parser && ln -sv "${WORKDIR}"/fast_double_parser-efec03532ef65984786e5e32dbc81f6e6a55a115 external_libs/fast_double_parser
 	rmdir external_libs/fmt && ln -sv "${WORKDIR}"/fmt-f5e54359df4c26b6230fc61d38aa294581393084 external_libs/fmt
 	cmake_src_prepare
+	use cuda && cuda_src_prepare
+}
+
+src_configure() {
+	local mycmakeargs=()
+	if use cuda; then
+		# Host compiler should also be nvcc compatible,
+		# or error occur in the final linking
+		# CMakeLists also ensures that, so configure fails as well
+		PATH="$(cuda_gccdir):${PATH}"
+		mycmakeargs+=(
+			-DUSE_CUDA=ON
+		)
+	fi
+	cmake_src_configure
 }
