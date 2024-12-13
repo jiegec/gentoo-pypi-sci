@@ -1,0 +1,17 @@
+Index: pygam-0.9.1/pyproject.toml
+===================================================================
+--- pygam-0.9.1.orig/pyproject.toml
++++ pygam-0.9.1/pyproject.toml
+@@ -52,10 +52,5 @@ exclude = '''
+ '''
+ 
+ [build-system]
+-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+-build-backend = "poetry_dynamic_versioning.backend"
+-
+-[tool.poetry-dynamic-versioning]
+-enable = false
+-vcs = "git"
+-style = "semver"
++requires = ["poetry-core>=1.0.0"]
++build-backend = "poetry.core.masonry.api"
