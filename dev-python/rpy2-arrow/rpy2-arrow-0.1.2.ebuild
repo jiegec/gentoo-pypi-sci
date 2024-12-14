@@ -17,7 +17,7 @@ KEYWORDS="~amd64"
 
 IUSE=""
 RDEPEND="dev-python/pyarrow[${PYTHON_USEDEP}]
-	>=dev-python/rpy-3.5.15[${PYTHON_USEDEP}]
+	>=dev-python/rpy2-3.5.15[${PYTHON_USEDEP}]
 	dev-python/pytest[${PYTHON_USEDEP}]
 	dev-python/pandas[${PYTHON_USEDEP}]
 	dev-python/rpy2-r6[${PYTHON_USEDEP}]"
