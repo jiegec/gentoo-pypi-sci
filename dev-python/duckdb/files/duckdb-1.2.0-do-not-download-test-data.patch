@@ -1,0 +1,31 @@
+Index: duckdb-1.2.0/tests/slow/test_h2oai_arrow.py
+===================================================================
+--- duckdb-1.2.0.orig/tests/slow/test_h2oai_arrow.py
++++ duckdb-1.2.0/tests/slow/test_h2oai_arrow.py
+@@ -9,8 +9,7 @@ np = importorskip('numpy')
+ 
+ 
+ def download_file(url, name):
+-    r = requests.get(url, allow_redirects=True)
+-    open(name, 'wb').write(r.content)
++    return True
+ 
+ 
+ def group_by_q1(con):
+@@ -181,7 +180,6 @@ class TestH2OAIArrow(object):
+         )
+         arrow_table = read_csv('G1_1e7_1e2_5_0.csv.gz')
+         con.register("x", arrow_table)
+-        os.remove('G1_1e7_1e2_5_0.csv.gz')
+ 
+         con.execute(f"PRAGMA threads={threads}")
+ 
+@@ -234,8 +232,3 @@ def large_data():
+     con.register("big", arrow_table)
+ 
+     yield con
+-
+-    os.remove('J1_1e7_NA_0_0.csv.gz')
+-    os.remove('J1_1e7_1e1_0_0.csv.gz')
+-    os.remove('J1_1e7_1e4_0_0.csv.gz')
+-    os.remove('J1_1e7_1e7_0_0.csv.gz')
