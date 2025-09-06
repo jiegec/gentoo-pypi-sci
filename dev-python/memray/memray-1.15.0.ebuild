@@ -20,7 +20,7 @@ RDEPEND="dev-python/greenlet[${PYTHON_USEDEP}]
 	dev-python/cython[${PYTHON_USEDEP}]
 	dev-python/jinja2[${PYTHON_USEDEP}]
 	dev-python/textual[${PYTHON_USEDEP}]
-	dev-libs/elfutils
+	dev-libs/elfutils[debuginfod]
 	sys-libs/libunwind
 	app-arch/lz4
 "
