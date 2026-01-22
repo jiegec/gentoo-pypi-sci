@@ -25,5 +25,6 @@ dev-python/etuples[${PYTHON_USEDEP}]
 dev-python/logical-unification[${PYTHON_USEDEP}]
 dev-python/miniKanren[${PYTHON_USEDEP}]
 dev-python/cons[${PYTHON_USEDEP}]
+dev-python/filelock[${PYTHON_USEDEP}]
 "
 distutils_enable_tests pytest
