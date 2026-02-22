@@ -1,0 +1,35 @@
+# Copyright 1999-2022 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+PYTHON_COMPAT=( python3_{12..13} )
+DISTUTILS_USE_PEP517=setuptools
+PYPI_NO_NORMALIZE=1
+
+inherit distutils-r1 pypi
+
+DESCRIPTION="Utilities for building and installing packages in the Astropy ecosystem"
+HOMEPAGE="https://github.com/astropy/extension-helpers"
+SRC_URI="https://files.pythonhosted.org/packages/24/51/d03359b683ed288b34d713dea97d2aee87a9bd866af1652554d9f643b47d/extension_helpers-1.4.0.tar.gz"
+
+LICENSE="BSD"
+SLOT="0"
+KEYWORDS="~amd64 ~x86"
+
+#TODO: Package all these pytest deps:
+# 	pytest-doctestplus>=0.2.0
+# 	pytest-remotedata>=0.3.1
+# 	pytest-openfiles>=0.3.1
+# 	pytest-astropy-header>=0.1.2
+# 	pytest-arraydiff>=0.1
+# 	pytest-filter-subpackage>=0.1
+RESTRICT="test"
+
+distutils_enable_tests pytest
+distutils_enable_sphinx docs dev-python/sphinx-astropy
+
+src_unpack() {
+	default
+	mv "${WORKDIR}/extension_helpers-${PV}" "${WORKDIR}/${P}" || die
+}
