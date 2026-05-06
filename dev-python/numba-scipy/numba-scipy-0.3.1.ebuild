@@ -3,8 +3,10 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9..11} )
+PYTHON_COMPAT=( python3_{11..13} )
 PYPI_NO_NORMALIZE=1
+DISTUTILS_USE_PEP517=setuptools
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="numba-scipy extends Numba to make it aware of SciPy"
