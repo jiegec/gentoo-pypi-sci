@@ -1,0 +1,14 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -113,6 +113,10 @@ if(ROCPROFILER_REGISTER_BUILD_SAMPLES)
+     add_subdirectory(samples)
+ endif()
+ 
+-include(rocprofiler_register_config_packaging)
++option(ROCPROFILER_REGISTER_BUILD_PACKAGING "Enable CPack packaging" OFF)
++
++if(ROCPROFILER_REGISTER_BUILD_PACKAGING)
++  include(rocprofiler_register_config_packaging)
++endif()
+ 
+ rocprofiler_register_print_features()

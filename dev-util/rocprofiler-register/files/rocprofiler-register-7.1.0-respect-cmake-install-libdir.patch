@@ -1,0 +1,12 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -77,9 +77,6 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${PROJECT_SOURCE_DIR}/cmake/Mo
+ 
+ include(GNUInstallDirs) # install directories
+ 
+-# ROCm does not use lib64
+-set(CMAKE_INSTALL_LIBDIR "lib")
+-
+ include(rocprofiler_register_utilities) # various functions/macros
+ include(rocprofiler_register_interfaces) # interface libraries
+ include(rocprofiler_register_compilers) # compiler identification
