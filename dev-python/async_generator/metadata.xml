@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>maintainer-needed@gentoo.org</email>
+		<name>Gentoo maintainer needed</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="pypi">async-generator</remote-id>
+		<remote-id type="github">python-trio/async_generator</remote-id>
+	</upstream>
+</pkgmetadata>
