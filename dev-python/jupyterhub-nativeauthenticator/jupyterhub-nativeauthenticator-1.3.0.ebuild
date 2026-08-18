@@ -1,0 +1,27 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+PYTHON_COMPAT=( python3_{11..13} )
+DISTUTILS_USE_PEP517=setuptools
+
+inherit distutils-r1 pypi
+
+DESCRIPTION="JupyterHub Native Authenticator"
+HOMEPAGE="https://github.com/jupyterhub/nativeauthenticator"
+
+LICENSE="BSD"
+SLOT="0"
+KEYWORDS="~amd64"
+
+RDEPEND="
+	>=dev-python/jupyterhub-4.1.6[${PYTHON_USEDEP}]
+	dev-python/bcrypt[${PYTHON_USEDEP}]
+	dev-python/onetimepass[${PYTHON_USEDEP}]
+"
+BDEPEND="
+	dev-python/setuptools-scm[${PYTHON_USEDEP}]
+"
+
+distutils_enable_tests pytest
