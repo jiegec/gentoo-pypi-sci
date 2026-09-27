@@ -1,0 +1,9 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index cc726ee..a06eccb 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -33,3 +33,3 @@ dependencies = [
+     "progressbar2>=4.2.0,<5",
+-    "scipy>=1.11.1,<1.17",
++    "scipy>=1.11.1,<1.18",
+ ]
