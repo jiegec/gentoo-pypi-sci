@@ -9,4 +9,9 @@
 		<remote-id type="pypi">snakemake</remote-id>
 		<remote-id type="github">snakemake/snakemake</remote-id>
 	</upstream>
+	<use>
+		<flag name="conda">Support global Conda environments through conda-inject</flag>
+		<flag name="reports">Enable syntax highlighting in reports</flag>
+		<flag name="slurm">Install the Slurm executor plugin</flag>
+	</use>
 </pkgmetadata>

@@ -20,8 +20,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	dev-python/snakemake-interface-common[${PYTHON_USEDEP}]
-	dev-python/snakemake-interface-executor-plugins[${PYTHON_USEDEP}]
-	sys-cluster/slurm
+	>=dev-python/snakemake-interface-common-1.17.4[${PYTHON_USEDEP}]
+	>=dev-python/snakemake-interface-executor-plugins-9.3.2[${PYTHON_USEDEP}]
 "
 
+# Compute nodes supply srun outside Gentoo Prefix.

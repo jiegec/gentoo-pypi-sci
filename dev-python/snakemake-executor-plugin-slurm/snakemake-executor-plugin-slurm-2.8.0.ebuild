@@ -19,27 +19,23 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
+# Keep dependency minimums from upstream and mask only proven incompatible updates.
 RDEPEND="
-	>=dev-python/numpy-1.26.4[${PYTHON_USEDEP}]
-	<dev-python/numpy-3[${PYTHON_USEDEP}]
-	>=dev-python/pandas-2.2.3[${PYTHON_USEDEP}]
-	<dev-python/pandas-3.0.0[${PYTHON_USEDEP}]
-	>=dev-python/pyyaml-6.0.0[${PYTHON_USEDEP}]
-	<dev-python/pyyaml-7.0.0[${PYTHON_USEDEP}]
+	>=dev-python/numpy-2.4.5[${PYTHON_USEDEP}]
+	>=dev-python/pandas-2.3.3[${PYTHON_USEDEP}]
+	>=dev-python/pyyaml-6.0.3[${PYTHON_USEDEP}]
 	>=dev-python/snakemake-executor-plugin-slurm-jobstep-0.6.0[${PYTHON_USEDEP}]
-	<dev-python/snakemake-executor-plugin-slurm-jobstep-0.7.0[${PYTHON_USEDEP}]
-	>=dev-python/snakemake-interface-common-1.21.0[${PYTHON_USEDEP}]
-	<dev-python/snakemake-interface-common-2.0.0[${PYTHON_USEDEP}]
-	>=dev-python/snakemake-interface-executor-plugins-9.3.9[${PYTHON_USEDEP}]
-	<dev-python/snakemake-interface-executor-plugins-10.0.0[${PYTHON_USEDEP}]
+	>=dev-python/snakemake-interface-common-1.23.0[${PYTHON_USEDEP}]
+	>=dev-python/snakemake-interface-executor-plugins-9.4.0[${PYTHON_USEDEP}]
 	>=dev-python/throttler-1.2.2[${PYTHON_USEDEP}]
-	<dev-python/throttler-2.0.0[${PYTHON_USEDEP}]
-	sys-cluster/slurm
 "
+
+# The cluster supplies sbatch, squeue and sacct outside Gentoo Prefix.
 
 distutils_enable_tests pytest
 
 python_test() {
 	local -x PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
-	epytest tests/unit
+	epytest tests/test_time_conversion.py tests/test_parsing.py \
+		tests/test_scontrol_parsing.py
 }
