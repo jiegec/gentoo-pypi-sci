@@ -14,9 +14,9 @@ DESCRIPTION="ROCm plugin for JAX"
 HOMEPAGE="https://github.com/ROCm/rocm-jax"
 SRC_URI="
 	amd64? (
-		$(pypi_wheel_url "${PYPI_PN}" "${PV}" cp311 cp311-manylinux_2_28_x86_64)
-		$(pypi_wheel_url "${PYPI_PN}" "${PV}" cp312 cp312-manylinux_2_28_x86_64)
-		$(pypi_wheel_url "${PYPI_PN}" "${PV}" cp313 cp313-manylinux_2_28_x86_64)
+		python_targets_python3_11? ( $(pypi_wheel_url "${PYPI_PN}" "${PV}" cp311 cp311-manylinux_2_28_x86_64) )
+		python_targets_python3_12? ( $(pypi_wheel_url "${PYPI_PN}" "${PV}" cp312 cp312-manylinux_2_28_x86_64) )
+		python_targets_python3_13? ( $(pypi_wheel_url "${PYPI_PN}" "${PV}" cp313 cp313-manylinux_2_28_x86_64) )
 	)
 "
 S=${WORKDIR}
