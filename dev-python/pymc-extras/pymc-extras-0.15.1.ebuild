@@ -15,6 +15,8 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
+PATCHES=( "${FILESDIR}/${P}-jacobian.patch" )
+
 RDEPEND="
 	>=dev-python/arviz-1.2[${PYTHON_USEDEP}]
 	<dev-python/arviz-2[${PYTHON_USEDEP}]
