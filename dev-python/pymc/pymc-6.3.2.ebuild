@@ -19,7 +19,6 @@ RDEPEND="
 	>=dev-python/arviz-1.1[${PYTHON_USEDEP}]
 	<dev-python/arviz-2[${PYTHON_USEDEP}]
 	>=dev-python/cachetools-4.2.1[${PYTHON_USEDEP}]
-	<dev-python/cachetools-7[${PYTHON_USEDEP}]
 	dev-python/cloudpickle[${PYTHON_USEDEP}]
 	>=dev-python/numpy-1.25[${PYTHON_USEDEP}]
 	>=dev-python/pandas-0.24[${PYTHON_USEDEP}]

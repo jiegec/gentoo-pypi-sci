@@ -16,13 +16,11 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
-# The available Numba 0.65.1 requires NumPy <2.5.
 RDEPEND="
 	>=dev-python/setuptools-59[${PYTHON_USEDEP}]
 	>=dev-python/scipy-1[${PYTHON_USEDEP}]
 	<dev-python/scipy-2[${PYTHON_USEDEP}]
 	>=dev-python/numpy-2[${PYTHON_USEDEP}]
-	<dev-python/numpy-2.5[${PYTHON_USEDEP}]
 	>=dev-python/numba-0.58[${PYTHON_USEDEP}]
 	<=dev-python/numba-0.67.0[${PYTHON_USEDEP}]
 	>=dev-python/filelock-3.15[${PYTHON_USEDEP}]
@@ -30,7 +28,6 @@ RDEPEND="
 BDEPEND="
 	dev-python/cython[${PYTHON_USEDEP}]
 	>=dev-python/numpy-2[${PYTHON_USEDEP}]
-	<dev-python/numpy-2.5[${PYTHON_USEDEP}]
 	dev-python/versioneer[${PYTHON_USEDEP}]
 "
 
