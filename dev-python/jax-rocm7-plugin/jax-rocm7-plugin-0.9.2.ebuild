@@ -26,8 +26,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="strip"
 
-ROCM_VERSION=7.1.0
-LLVM_SLOT=20
+ROCM_VERSION=7.2.0
+LLVM_SLOT=22
 
 RDEPEND="
 	~dev-python/jax-rocm7-pjrt-${PV}[${PYTHON_USEDEP}]
