@@ -15,6 +15,7 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
+# Upstream caps cachetools below 7; Prefix smoke tests pass with 7.2.0.
 RDEPEND="
 	>=dev-python/arviz-1.1[${PYTHON_USEDEP}]
 	<dev-python/arviz-2[${PYTHON_USEDEP}]
