@@ -25,7 +25,7 @@ KEYWORDS="~amd64"
 RESTRICT="strip"
 
 ROCM_VERSION=7.1.0
-LLVM_SLOT=18
+LLVM_SLOT=20
 
 RDEPEND="
 	=dev-build/rocm-cmake-${ROCM_VERSION}*
