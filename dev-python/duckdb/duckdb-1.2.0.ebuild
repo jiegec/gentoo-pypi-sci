@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -32,7 +32,10 @@ RDEPEND="dev-python/numpy[${PYTHON_USEDEP}]
 "
 DEPEND="${RDEPEND}"
 
-PATCHES=( "${FILESDIR}/${PN}-1.2.0-do-not-download-test-data.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-1.2.0-do-not-download-test-data.patch"
+	"${FILESDIR}/${PN}-1.2.0-thrift-cstdint.patch"
+)
 
 distutils_enable_tests pytest
 
