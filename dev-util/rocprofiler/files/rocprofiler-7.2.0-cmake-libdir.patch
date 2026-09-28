@@ -1,0 +1,95 @@
+--- a/source/bin/CMakeLists.txt
++++ b/source/bin/CMakeLists.txt
+@@ -15,7 +15,7 @@
+     COMPONENT tools)
+ 
+ configure_file(rocprofv3-avail.py
+-               ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/rocprofv3-avail COPYONLY)
++               ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/rocprofv3-avail @ONLY)
+ 
+ install(
+     FILES ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/rocprofv3-avail
+@@ -25,7 +25,7 @@
+     COMPONENT tools)
+ 
+ configure_file(rocprofv3-attach.py
+-               ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/rocprofv3-attach COPYONLY)
++               ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/rocprofv3-attach @ONLY)
+ 
+ install(
+     FILES ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/rocprofv3-attach
+--- a/source/bin/rocprofv3.py
++++ b/source/bin/rocprofv3.py
+@@ -187,7 +187,7 @@
+         return os.environ.get("ROCPROF_ATT_LIBRARY_PATH")
+     else:
+         default_lib_path_env = os.environ.get("LD_LIBRARY_PATH", "").split(":") + [
+-            f"{ROCM_DIR}/lib"
++            f"{ROCM_DIR}/@CMAKE_INSTALL_LIBDIR@"
+         ]
+         for itr in default_lib_path_env:
+             if itr not in library_paths:
+@@ -1113,16 +1113,16 @@
+     ROCM_DIR = os.path.dirname(ROCPROFV3_DIR)
+     if args.rocm_root is not None:
+         ROCM_DIR = os.path.abspath(args.rocm_root)
+-    ROCPROF_TOOL_LIBRARY = f"{ROCM_DIR}/lib/rocprofiler-sdk/librocprofiler-sdk-tool.so"
+-    ROCPROF_SDK_LIBRARY = f"{ROCM_DIR}/lib/librocprofiler-sdk.so"
+-    ROCPROF_ROCTX_LIBRARY = f"{ROCM_DIR}/lib/librocprofiler-sdk-roctx.so"
++    ROCPROF_TOOL_LIBRARY = f"{ROCM_DIR}/@CMAKE_INSTALL_LIBDIR@/rocprofiler-sdk/librocprofiler-sdk-tool.so"
++    ROCPROF_SDK_LIBRARY = f"{ROCM_DIR}/@CMAKE_INSTALL_LIBDIR@/librocprofiler-sdk.so"
++    ROCPROF_ROCTX_LIBRARY = f"{ROCM_DIR}/@CMAKE_INSTALL_LIBDIR@/librocprofiler-sdk-roctx.so"
+     ROCPROF_KOKKOSP_LIBRARY = (
+-        f"{ROCM_DIR}/lib/rocprofiler-sdk/librocprofiler-sdk-tool-kokkosp.so"
++        f"{ROCM_DIR}/@CMAKE_INSTALL_LIBDIR@/rocprofiler-sdk/librocprofiler-sdk-tool-kokkosp.so"
+     )
+     ROCPROF_LIST_AVAIL_TOOL_LIBRARY = (
+-        f"{ROCM_DIR}/lib/rocprofiler-sdk/librocprofv3-list-avail.so"
+-    )
+-    ROCPROF_ATTACH_TOOL_LIBRARY = f"{ROCM_DIR}/lib/rocprofiler-sdk/librocprofv3-attach.so"
++        f"{ROCM_DIR}/@CMAKE_INSTALL_LIBDIR@/rocprofiler-sdk/librocprofv3-list-avail.so"
++    )
++    ROCPROF_ATTACH_TOOL_LIBRARY = f"{ROCM_DIR}/@CMAKE_INSTALL_LIBDIR@/rocprofiler-sdk/librocprofv3-attach.so"
+ 
+     ROCPROF_TOOL_LIBRARY = resolve_library_path(ROCPROF_TOOL_LIBRARY, args)
+     ROCPROF_SDK_LIBRARY = resolve_library_path(ROCPROF_SDK_LIBRARY, args)
+@@ -1150,7 +1150,7 @@
+     )
+     update_env(
+         "LD_LIBRARY_PATH",
+-        f"{ROCM_DIR}/lib",
++        f"{ROCM_DIR}/@CMAKE_INSTALL_LIBDIR@",
+         append=True,
+     )
+ 
+--- a/source/bin/rocprofv3-avail.py
++++ b/source/bin/rocprofv3-avail.py
+@@ -477,7 +477,7 @@
+     ROCPROFV3_AVAIL_DIR = os.path.dirname(os.path.realpath(__file__))
+     ROCM_DIR = os.path.dirname(ROCPROFV3_AVAIL_DIR)
+     ROCPROF_LIST_AVAIL_TOOL_LIBRARY = (
+-        f"{ROCM_DIR}/lib/rocprofiler-sdk/librocprofv3-list-avail.so"
++        f"{ROCM_DIR}/@CMAKE_INSTALL_LIBDIR@/rocprofiler-sdk/librocprofv3-list-avail.so"
+     )
+     os.environ["ROCPROFILER_METRICS_PATH"] = f"{ROCM_DIR}/share/rocprofiler-sdk"
+     try:
+@@ -486,7 +486,7 @@
+     except (ImportError, ModuleNotFoundError):
+         # if failed, find the python package for this python version
+         ROCPROFV3_AVAIL_PACKAGE = (
+-            f"{ROCM_DIR}/lib/python{sys.version_info[0]}/site-packages"
++            f"{ROCM_DIR}/@CMAKE_INSTALL_LIBDIR@/python{sys.version_info[0]}/site-packages"
+         )
+         sys.path.append(ROCPROFV3_AVAIL_PACKAGE)
+ 
+--- a/source/bin/rocprofv3-attach.py
++++ b/source/bin/rocprofv3-attach.py
+@@ -30,7 +30,7 @@
+ 
+ ROCPROFV3_ATTACH_DIR = os.path.dirname(os.path.realpath(__file__))
+ ROCM_DIR = os.path.dirname(ROCPROFV3_ATTACH_DIR)
+-ROCPROF_ATTACH_TOOL_LIBRARY = f"{ROCM_DIR}/lib/rocprofiler-sdk/librocprofv3-attach.so"
++ROCPROF_ATTACH_TOOL_LIBRARY = f"{ROCM_DIR}/@CMAKE_INSTALL_LIBDIR@/rocprofiler-sdk/librocprofv3-attach.so"
+ 
+ 
+ def main(

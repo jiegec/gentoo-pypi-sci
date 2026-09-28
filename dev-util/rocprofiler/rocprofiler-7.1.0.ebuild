@@ -43,6 +43,8 @@ RESTRICT="!test? ( test )"
 
 S="${WORKDIR}/rocm-systems-rocm-${PV}/projects/rocprofiler-sdk"
 
+PATCHES=( "${FILESDIR}/${PN}-${PV}-cmake-libdir.patch" )
+
 DEPEND="
 	${PYTHON_DEPS}
 	>=dev-libs/rocm-core-${PV}:=

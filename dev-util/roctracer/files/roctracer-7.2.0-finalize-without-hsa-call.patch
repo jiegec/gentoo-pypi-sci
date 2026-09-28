@@ -1,0 +1,16 @@
+--- a/src/roctracer/hsa_support.cpp
++++ b/src/roctracer/hsa_support.cpp
+@@ -623,11 +623,8 @@
+ }
+ 
+ void Finalize() {
+-  if (hsa_status_t status =
+-          saved_amd_ext_api.hsa_amd_profiling_async_copy_enable_fn(profiling_async_copy_enable.load(std::memory_order_relaxed));
+-      status != HSA_STATUS_SUCCESS)
+-    assert(!"hsa_amd_profiling_async_copy_enable failed");
+-
++  // OnUnload runs after the last HSA shutdown; only clear roctracer-owned state.
++  profiling_async_copy_enable.store(false, std::memory_order_relaxed);
+   memset(&saved_core_api, '\0', sizeof(saved_core_api));
+   memset(&saved_amd_ext_api, '\0', sizeof(saved_amd_ext_api));
+   memset(&hsa_loader_api, '\0', sizeof(hsa_loader_api));
