@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>maintainer-needed@gentoo.org</email>
+		<name>Gentoo maintainer needed</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="pypi">nutpie</remote-id>
+		<remote-id type="github">pymc-devs/nutpie</remote-id>
+	</upstream>
+	<use>
+		<flag name="pymc-jax">Enable PyMC sampling with the ROCm-backed JAX stack</flag>
+	</use>
+</pkgmetadata>
