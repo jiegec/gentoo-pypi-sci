@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>maintainer-needed@gentoo.org</email>
+		<name>Gentoo maintainer needed</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="pypi">etils</remote-id>
+		<remote-id type="github">google/etils</remote-id>
+	</upstream>
+	<use>
+		<flag name="epath">Install dependencies for etils.epath</flag>
+		<flag name="epy">Install dependencies for etils.epy</flag>
+	</use>
+</pkgmetadata>
