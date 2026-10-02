@@ -34,6 +34,9 @@ src_prepare() {
 	sed -e '/set(CMAKE_INSTALL_LIBDIR "lib")/d' \
 		-e '/include(rocprofiler_register_config_packaging)/d' \
 		-i CMakeLists.txt || die
+	# Fails on libcxx
+	sed -e '/include <cstring>/a#include <cstdlib>' \
+		-i external/fmt/include/fmt/format.h || die
 }
 
 src_configure() {
