@@ -42,6 +42,7 @@ BDEPEND="app-editors/vim-core"
 PATCHES=(
 	"${FILESDIR}/${PN}-7.2.0-use-system-hsakmt.patch"
 	"${FILESDIR}/${PN}-7.2.0-fix-libcxx.patch"
+	"${FILESDIR}/${PN}-7.2.0-intercept-queue-fix.patch"
 )
 
 # skip false positive detection in samples, bug #958188
