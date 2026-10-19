@@ -1,0 +1,92 @@
+--- a/pjrt/python/__init__.py
++++ b/pjrt/python/__init__.py
+@@ -76,60 +76,6 @@
+     return None
+ 
+ 
+-def set_rocm_paths(path):  # pylint: disable=too-many-branches
+-    """Set ROCm environment paths for bitcode and linker.
+-
+-    Args:
+-        path: Path to the ROCm plugin library.
+-    """
+-    rocm_lib = None
+-    try:
+-        import rocm  # pylint: disable=import-outside-toplevel
+-
+-        rocm_lib = os.path.join(rocm.__path__[0], "lib")
+-    except ImportError:
+-        # find python site-packages
+-        sp = path.parent.parent.parent
+-        maybe_rocm_lib = os.path.join(sp, "rocm/lib")
+-        if os.path.exists(maybe_rocm_lib):
+-            rocm_lib = maybe_rocm_lib
+-
+-    if not rocm_lib:
+-        logger.info("No ROCm wheel installation found")
+-        return
+-
+-    logger.info("ROCm wheel install found at %r", rocm_lib)
+-
+-    bitcode_path = ""
+-    lld_path = ""
+-
+-    for root, _dirs, files in os.walk(os.path.join(rocm_lib, "llvm")):
+-        # look for ld.lld and ocml.bc
+-        for f in files:
+-            if f == "ocml.bc":
+-                bitcode_path = root
+-            if f == "ld.lld":
+-                # amd backend needs the directory not the full path to binary
+-                lld_path = root
+-
+-        if bitcode_path and lld_path:
+-            break
+-
+-    if not bitcode_path:
+-        logger.warning("jax_rocm_plugin couldn't locate amdgpu bitcode")
+-    else:
+-        logger.info("jax_rocm_plugin using bitcode found at %r", bitcode_path)
+-
+-    if not lld_path:
+-        logger.warning("jax_rocm_plugin couldn't locate amdgpu ld.lld")
+-    else:
+-        logger.info("jax_rocm_plugin using ld.lld found at %r", lld_path)
+-
+-    os.environ["JAX_ROCM_PLUGIN_INTERNAL_BITCODE_PATH"] = bitcode_path
+-    os.environ["HIP_DEVICE_LIB_PATH"] = bitcode_path
+-    os.environ["JAX_ROCM_PLUGIN_INTERNAL_LLD_PATH"] = lld_path
+-
+-
+ def count_amd_gpus(stop_at: int = None) -> int:
+     """Count AMD GPUs available via KFD kernel driver.
+ 
+@@ -237,8 +183,6 @@
+     if path is None:
+         return
+ 
+-    set_rocm_paths(path)
+-
+     if rocm_plugin_extension is None:
+         logger.warning("rocm_plugin_extension not found")
+         return
+--- a/pjrt/tools/build_gpu_plugin_wheel.py
++++ b/pjrt/tools/build_gpu_plugin_wheel.py
+@@ -247,16 +247,7 @@
+         raise RuntimeError(mesg) from ex
+ 
+     shared_obj_path = os.path.join(plugin_dir, "xla_rocm_plugin.so")
+-    runpath = ":".join(
+-        [
+-            "$ORIGIN/../rocm/lib",
+-            "$ORIGIN/../rocm/lib/rocm_sysdeps/lib",
+-            "$ORIGIN/../../rocm/lib",
+-            "$ORIGIN/../../rocm/lib/rocm_sysdeps/lib",
+-            "/opt/rocm/lib",
+-            "/opt/rocm/lib/rocm_sysdeps/lib",
+-        ]
+-    )
++    runpath = "@GENTOO_ROCM_LIBDIR@"
+     # patchelf --set-rpath $RUNPATH $so
+     fix_perms = False
+     perms = os.stat(shared_obj_path).st_mode

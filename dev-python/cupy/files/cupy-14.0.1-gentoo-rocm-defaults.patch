@@ -1,0 +1,47 @@
+--- a/cupy/_environment.py
++++ b/cupy/_environment.py
+@@ -203,9 +203,15 @@
+ 
+ 
+ def _get_rocm_path():
+-    # Use environment variable
+-    rocm_path = os.environ.get('ROCM_HOME', '')
+-    if os.path.exists(rocm_path):
++    # Explicit ROCm installations take precedence over the Gentoo default.
++    for name in ('ROCM_HOME', 'ROCM_PATH'):
++        rocm_path = os.environ.get(name, '')
++        if os.path.exists(rocm_path):
++            return rocm_path
++
++    # Substituted by the ebuild, including EPREFIX for Gentoo Prefix.
++    rocm_path = '@GENTOO_ROCM_ROOT@'
++    if os.path.isfile(os.path.join(rocm_path, 'include/hip/hip_runtime.h')):
+         return rocm_path
+ 
+     # Use hipcc path
+--- a/cupy/cuda/compiler.py
++++ b/cupy/cuda/compiler.py
+@@ -814,7 +814,10 @@
+     # As of ROCm 3.5.0 hiprtc/hipcc can automatically pick up the
+     # right arch without setting HCC_AMDGPU_TARGET, so we don't need
+     # to set arch here
+-    cmd = ['hipcc', '--genco'] + list(options)
++    hipcc = _environment.get_hipcc_path()
++    if hipcc is None:
++        raise RuntimeError('Failed to locate hipcc in the ROCm installation.')
++    cmd = [hipcc, '--genco'] + list(options)
+ 
+     with tempfile.TemporaryDirectory() as root_dir:
+         path = os.path.join(root_dir, 'kern')
+@@ -851,7 +854,10 @@
+ # TODO(leofang): consider merge _preprocess_hipcc with _preprocess_hiprtc,
+ # perhaps also with _preprocess?
+ def _preprocess_hipcc(source, options):
+-    cmd = ['hipcc', '--preprocess'] + list(options)
++    hipcc = _environment.get_hipcc_path()
++    if hipcc is None:
++        raise RuntimeError('Failed to locate hipcc in the ROCm installation.')
++    cmd = [hipcc, '--preprocess'] + list(options)
+     with tempfile.TemporaryDirectory() as root_dir:
+         path = os.path.join(root_dir, 'kern')
+         cu_path = '%s.cpp' % path

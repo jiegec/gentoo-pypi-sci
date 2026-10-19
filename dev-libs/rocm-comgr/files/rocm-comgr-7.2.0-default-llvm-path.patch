@@ -1,0 +1,29 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -133,6 +133,15 @@
+         ${LLVM_EXTERNAL_SPIRV_LLVM_TRANSLATOR_SOURCE_DIR}/include)
+   endif()
+ endif()
++
++set(comgr_default_llvm_path "${CMAKE_INSTALL_PREFIX}")
++if(LLVM_INSTALL_PREFIX)
++  set(comgr_default_llvm_path "${LLVM_INSTALL_PREFIX}")
++endif()
++set(AMD_COMGR_DEFAULT_LLVM_PATH "${comgr_default_llvm_path}" CACHE PATH
++    "LLVM installation used when LLVM_PATH is unset")
++target_compile_definitions(amd_comgr PRIVATE
++    AMD_COMGR_DEFAULT_LLVM_PATH="${AMD_COMGR_DEFAULT_LLVM_PATH}")
+ 
+ target_include_directories(amd_comgr
+   PRIVATE
+--- a/src/comgr-env.cpp
++++ b/src/comgr-env.cpp
+@@ -66,7 +66,7 @@
+ 
+ llvm::StringRef getLLVMPath() {
+   static const char *EnvLLVMPath = std::getenv("LLVM_PATH");
+-  return EnvLLVMPath;
++  return EnvLLVMPath ? EnvLLVMPath : AMD_COMGR_DEFAULT_LLVM_PATH;
+ }
+ 
+ StringRef getCachePolicy() {

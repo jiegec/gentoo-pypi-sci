@@ -1,0 +1,18 @@
+--- a/third_party/boringssl.patch
++++ b/third_party/boringssl.patch
+@@ -11,3 +11,15 @@
+      hdrs = ssl_headers,
+      copts = boringssl_copts_cxx,
+      includes = ["src/include"],
++diff --git a/src/crypto/internal.h b/src/crypto/internal.h
++--- a/src/crypto/internal.h
+++++ b/src/crypto/internal.h
++@@ -854,7 +854,7 @@
++     return NULL;
++   }
++ 
++-  return memchr(s, c, n);
+++  return (void *)memchr(s, c, n);
++ }
++ 
++ #endif  // __cplusplus

@@ -1,0 +1,86 @@
+--- a/third_party/gpus/rocm_configure.bzl
++++ b/third_party/gpus/rocm_configure.bzl
+@@ -60,7 +60,7 @@
+ _ROCM_DISTRO_LINKS = "ROCM_DISTRO_LINKS"
+ _TMPDIR = "TMPDIR"
+ 
+-_DEFAULT_ROCM_TOOLKIT_PATH = "/opt/rocm"
++_DEFAULT_ROCM_TOOLKIT_PATH = "@GENTOO_ROCM_ROOT@"
+ _TF_ROCM_MULTIPLE_PATHS = "TF_ROCM_MULTIPLE_PATHS"
+ _TF_ROCM_RBE_DOCKER_IMAGE = "TF_ROCM_RBE_DOCKER_IMAGE"
+ _TF_ROCM_RBE_POOL = "TF_ROCM_RBE_POOL"
+--- a/xla/tsl/platform/default/rocm_rocdl_path.cc
++++ b/xla/tsl/platform/default/rocm_rocdl_path.cc
+@@ -16,6 +16,9 @@
+ #include "xla/tsl/platform/rocm_rocdl_path.h"
+ 
+ #include <stdlib.h>
++
++#include <filesystem>
++#include <system_error>
+ 
+ #include "tsl/platform/path.h"
+ 
+@@ -44,6 +47,13 @@
+   if (const char* device_lib_path_env = std::getenv("HIP_DEVICE_LIB_PATH")) {
+     return device_lib_path_env;
+   } else {
++    // Gentoo installs device libraries below lib, including in Prefix.
++    const auto gentoo_path = io::JoinPath(RocmRoot(), "lib/amdgcn/bitcode");
++    std::error_code error;
++    if (std::filesystem::is_regular_file(
++            io::JoinPath(gentoo_path, "ocml.bc"), error)) {
++      return gentoo_path;
++    }
+     return io::JoinPath(RocmRoot(), "amdgcn/bitcode");
+   }
+ }
+--- a/xla/service/gpu/llvm_gpu_backend/amdgpu_backend.cc
++++ b/xla/service/gpu/llvm_gpu_backend/amdgpu_backend.cc
+@@ -570,7 +570,8 @@
+     if (std::getenv("LLVM_PATH")) {
+       lld_path = tsl::io::JoinPath(std::getenv("LLVM_PATH"), "bin");
+     } else {
+-      lld_path = tsl::io::JoinPath(tsl::RocmRoot(), "llvm/bin");
++      // Gentoo slots LLVM separately from the ROCm root.
++      lld_path = "@GENTOO_LLVM_ROOT@/bin";
+     }
+     auto lld_program = llvm::sys::findProgramByName("ld.lld", {lld_path});
+     if (!lld_program) {
+--- a/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_driver_rocm.tpl
++++ b/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_driver_rocm.tpl
+@@ -206,7 +206,7 @@
+   hipccopts += defines
+   hipccopts += std_options
+   hipccopts += m_options
+-  hipccopts += ' --rocm-path="%{rocm_root}" '
++  hipccopts += ' --rocm-path="@GENTOO_ROCM_ROOT@" '
+ 
+   if depfiles:
+     # Generate the dependency file
+@@ -233,6 +233,14 @@
+ 
+ 
+ def main():
++  # Gentoo's ROCm headers share the compiler's default C include directory.
++  # Re-adding it with -isystem would put it before libstdc++ and break
++  # include_next in headers such as <cstdlib>.
++  for i in range(len(sys.argv) - 2, 0, -1):
++    if (sys.argv[i] == '-isystem' and
++        os.path.realpath(sys.argv[i + 1]) == '@GENTOO_ROCM_ROOT@/include'):
++      del sys.argv[i:i + 2]
++
+   if TMPDIR:
+     os.environ['TMPDIR'] = TMPDIR
+   # ignore PWD env var
+--- a/third_party/gpus/rocm/BUILD.tpl
++++ b/third_party/gpus/rocm/BUILD.tpl
+@@ -163,7 +163,7 @@
+             "-Lexternal/local_config_rocm/rocm/%{rocm_root}/lib",
+         ],
+         "//conditions:default": [
+-            "-Wl,-rpath,/opt/rocm/lib",
++            "-Wl,-rpath,@GENTOO_ROCM_LIBDIR@",
+             "-Lexternal/local_config_rocm/rocm/%{rocm_root}/lib",
+         ],
+     }),
