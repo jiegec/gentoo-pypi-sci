@@ -23,3 +23,5 @@ RDEPEND=">=dev-python/atpublic-2.3[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.3.0[${PYTHON_USEDEP}]
 	>=dev-python/tzdata-2022.7[${PYTHON_USEDEP}]"
 distutils_enable_tests pytest
+
+PATCHES=( "${FILESDIR}"/${PN}-12_no-arrow-hotfix.patch )

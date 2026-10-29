@@ -1,0 +1,28 @@
+Index: ibis_framework-12.0.0/ibis/backends/duckdb/__init__.py
+===================================================================
+--- ibis_framework-12.0.0.orig/ibis/backends/duckdb/__init__.py
++++ ibis_framework-12.0.0/ibis/backends/duckdb/__init__.py
+@@ -42,7 +42,6 @@ if TYPE_CHECKING:
+     import pandas as pd
+     import polars as pl
+     import pyarrow as pa
+-    import pyarrow_hotfix  # noqa: F401
+     import torch
+     from fsspec import AbstractFileSystem
+ 
+@@ -1370,7 +1369,6 @@ class Backend(
+             The number of rows to fetch per batch
+         """
+         import pyarrow as pa
+-        import pyarrow_hotfix  # noqa: F401
+ 
+         self._run_pre_execute_hooks(expr)
+         table = expr.as_table()
+@@ -1412,7 +1410,6 @@ class Backend(
+         """Execute an expression."""
+         import pandas as pd
+         import pyarrow.types as pat
+-        import pyarrow_hotfix  # noqa: F401
+ 
+         from ibis.backends.duckdb.converter import DuckDBPandasData
+ 
