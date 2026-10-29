@@ -26,3 +26,39 @@ Index: ibis_framework-12.0.0/ibis/backends/duckdb/__init__.py
  
          from ibis.backends.duckdb.converter import DuckDBPandasData
  
+Index: ibis_framework-12.0.0/ibis/formats/__init__.py
+===================================================================
+--- ibis_framework-12.0.0.orig/ibis/formats/__init__.py
++++ ibis_framework-12.0.0/ibis/formats/__init__.py
+@@ -253,7 +253,6 @@ class TableProxy(PseudoHashable[T]):
+ 
+     def to_pyarrow_bytes(self, schema: Schema) -> bytes:
+         import pyarrow as pa
+-        import pyarrow_hotfix  # noqa: F401
+ 
+         data = self.to_pyarrow(schema=schema)
+         out = pa.BufferOutputStream()
+Index: ibis_framework-12.0.0/ibis/formats/pandas.py
+===================================================================
+--- ibis_framework-12.0.0.orig/ibis/formats/pandas.py
++++ ibis_framework-12.0.0/ibis/formats/pandas.py
+@@ -433,7 +433,6 @@ class PandasDataFrameProxy(TableProxy[pd
+         from decimal import Decimal
+ 
+         import pyarrow as pa
+-        import pyarrow_hotfix  # noqa: F401
+ 
+         pyarrow_schema = PyArrowSchema.from_ibis(schema)
+ 
+Index: ibis_framework-12.0.0/ibis/formats/pyarrow.py
+===================================================================
+--- ibis_framework-12.0.0.orig/ibis/formats/pyarrow.py
++++ ibis_framework-12.0.0/ibis/formats/pyarrow.py
+@@ -4,7 +4,6 @@ import contextlib
+ from typing import TYPE_CHECKING, Any
+ 
+ import pyarrow as pa
+-import pyarrow_hotfix  # noqa: F401
+ 
+ import ibis.common.exceptions as com
+ import ibis.expr.datatypes as dt
